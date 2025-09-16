@@ -37,7 +37,7 @@ const Navbar = () => {
             {/* Logo */}
             <div className="flex items-center">
               <span className="text-2xl font-bold">
-                <span className="text-secondary">#WEOR</span>
+                <span className="text-secondary">#WEARE</span>
                 <span className="text-primary">IFUPS</span>
               </span>
             </div>

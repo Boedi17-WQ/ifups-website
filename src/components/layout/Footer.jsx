@@ -7,7 +7,7 @@ const Footer = () => {
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
               <span className="text-2xl font-bold">
-                <span className="text-secondary">#WEOR</span>
+                <span className="text-secondary">#WEARE</span>
                 <span className="ml-2">IFUPS</span>
               </span>
             </div>
