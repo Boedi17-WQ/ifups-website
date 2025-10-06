@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#003D8D',    // Deep Blue
-        secondary: '#FECE00',  // Vivid Yellow
+        primary: '#003D8D',
+        secondary: '#FECE00',
       },
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
@@ -18,19 +18,22 @@ export default {
         'ifups': '35px',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-in': 'slideIn 0.5s ease-out',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'bounce-slow': 'bounce 2s infinite',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideIn: {
-          '0%': { transform: 'translateY(-20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
       },
+      animationDelay: {
+        '1000': '1000ms',
+        '2000': '2000ms',
+        '3000': '3000ms',
+        '4000': '4000ms',
+      }
     },
   },
   plugins: [],
