@@ -1,31 +1,33 @@
+import { Link } from "react-router-dom"; // <-- 1. IMPORT LINK
+
 const Berita = () => {
   const news = [
     {
       title: "Mahasiswa Informatika Juara Hackathon Nasional 2024",
       date: "15 Agustus 2024",
       excerpt: "Tim mahasiswa Informatika UPS berhasil meraih juara 1 dalam kompetisi hackathon nasional...",
-      image: "📱",
+      image: "/images/berita/hackathon.jpg", 
       category: "Prestasi"
     },
     {
       title: "Workshop Web Development Modern dengan React.js",
       date: "10 Agustus 2024",
       excerpt: "Program studi menyelenggarakan workshop web development untuk mahasiswa semester 5...",
-      image: "💻",
+      image: "/gedungUps1.jpg",
       category: "Acara"
     },
     {
       title: "Kerjasama dengan Perusahaan Tech Terkemuka",
       date: "5 Agustus 2024",
       excerpt: "Prodi Informatika menjalin kerjasama dengan perusahaan tech untuk program magang...",
-      image: "🤝",
+      image: "/images/berita/kerjasama.jpg",
       category: "Kerjasama"
     },
     {
       title: "Peluncuran Laboratorium AI dan Machine Learning",
       date: "1 Agustus 2024",
       excerpt: "Laboratorium baru dengan spesialisasi AI dan ML resmi dibuka untuk mendukung penelitian...",
-      image: "🤖",
+      image: "/images/berita/lab-ai.jpg",
       category: "Fasilitas"
     }
   ];
@@ -42,9 +44,13 @@ const Berita = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {news.map((item, index) => (
             <article key={index} className="bg-white rounded-ifups overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-gradient-to-r from-primary to-blue-800 flex items-center justify-center text-6xl text-white">
-                {item.image}
-              </div>
+              
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full aspect-video object-cover"
+              />
+              
               <div className="p-6">
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-secondary text-primary text-sm px-3 py-1 rounded-full font-medium">
@@ -56,6 +62,10 @@ const Berita = () => {
                   {item.title}
                 </h3>
                 <p className="text-gray-700 mb-4">{item.excerpt}</p>
+                {/* CATATAN: Tombol "Baca Selengkapnya" ini juga idealnya 
+                  menggunakan <Link> ke halaman detail, tapi untuk sekarang
+                  kita biarkan dulu sesuai permintaan Anda.
+                */}
                 <button className="text-primary hover:text-secondary font-medium transition-colors">
                   Baca Selengkapnya →
                 </button>
@@ -64,11 +74,17 @@ const Berita = () => {
           ))}
         </div>
 
+        {/* --- VVV BAGIAN INI DIUBAH DARI <button> MENJADI <Link> VVV --- */}
         <div className="text-center mt-12">
-          <button className="bg-primary text-white px-8 py-3 rounded-ifups hover:bg-blue-800 transition-colors">
+          <Link
+            to="/berita" // <-- 2. TAMBAHKAN 'to' KE HALAMAN 'BeritaIndex'
+            className="bg-primary text-white px-8 py-3 rounded-ifups hover:bg-blue-800 transition-colors"
+          >
             Lihat Semua Berita
-          </button>
+          </Link>
         </div>
+        {/* --- ^^^ AKHIR PERUBAHAN ^^^ --- */}
+
       </div>
     </section>
   );

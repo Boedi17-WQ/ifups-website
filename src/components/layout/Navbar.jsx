@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import {
   Menu, X, ChevronsLeft, ChevronsRight,
   Home, Info, Users, GraduationCap,
-  Briefcase, Newspaper, Image, Mail
+  Briefcase, Newspaper, Image, Mail,
+  Target // <-- IKON DITAMBAHKAN DI SINI
 } from "lucide-react";
 
 const Navbar = ({ onToggleCollapse }) => {
@@ -13,12 +14,13 @@ const Navbar = ({ onToggleCollapse }) => {
 
   const navItems = [
     { name: "Home", href: "#home", icon: Home },
+    { name: "Visi Misi", href: "#visi-misi", icon: Target },
     { name: "Tentang", href: "#tentang", icon: Info },
     { name: "Organisasi", href: "#organisasi", icon: Users },
     { name: "Dosen", href: "#dosen", icon: GraduationCap },
     { name: "Alumni", href: "#alumni", icon: Briefcase },
     { name: "Berita", href: "#berita", icon: Newspaper },
-    { name: "Galeri", href: "#galeri", icon: Image },
+    
     { name: "Kontak", href: "#kontak", icon: Mail },
   ];
 
@@ -26,10 +28,9 @@ const Navbar = ({ onToggleCollapse }) => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
 
-    const handleHashChange = () => {
-      setActiveHash(window.location.hash || "#home");
-    };
-    window.addEventListener("hashchange", handleHashChange);
+    // Hapus listener hashchange, biarkan observer yang bekerja
+    // const handleHashChange = () => setActiveHash(window.location.hash || "#home");
+    // window.addEventListener("hashchange", handleHashChange);
 
     if (onToggleCollapse) onToggleCollapse(isCollapsed);
 
@@ -41,20 +42,25 @@ const Navbar = ({ onToggleCollapse }) => {
           }
         });
       },
+      // rootMargin -70% berarti section harus 70% terlihat di atas
+      // sebelum section di bawahnya dianggap aktif
       { root: null, rootMargin: "0px 0px -70% 0px", threshold: 0.1 }
     );
 
     navItems.forEach((item) => {
+      // Hapus tanda # dari href untuk querySelector
       const section = document.querySelector(item.href);
       if (section) observer.observe(section);
     });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("hashchange", handleHashChange);
+      // window.removeEventListener("hashchange", handleHashChange);
       observer.disconnect();
     };
-  }, [isCollapsed, onToggleCollapse]);
+    // Hapus onToggleCollapse dari dependency array jika tidak diperlukan
+    // Kecuali jika 'onToggleCollapse' benar-benar memicu efek yang diinginkan
+  }, [isCollapsed, onToggleCollapse]); // <-- 'navItems' tidak perlu ditambahkan di sini
 
   const handleCollapse = () => {
     const newState = !isCollapsed;
@@ -62,21 +68,42 @@ const Navbar = ({ onToggleCollapse }) => {
     if (onToggleCollapse) onToggleCollapse(newState);
   };
 
+  const handleLinkClick = (e, href) => {
+    // 1. Hentikan perilaku 'lompat' bawaan
+    e.preventDefault();
+
+    // 2. Cari elemen section
+    const section = document.querySelector(href);
+
+    if (section) {
+      // 3. Lakukan smooth scroll ke elemen
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // 4. Update URL di browser
+    window.history.pushState(null, null, href);
+
+    // 5. Tutup sidebar di mobile
+    setIsSidebarOpen(false);
+  };
+
   const sidebarWidthClass = isCollapsed ? "w-20" : "w-64";
 
   return (
     <>
       {/* Tombol Menu Mobile */}
-      <button
-        className={`fixed top-4 left-4 z-50 p-2 rounded-lg lg:hidden transition-all ${
-          isScrolled
-            ? "bg-white text-blue-700 shadow-md"
-            : "bg-blue-800 text-white"
-        }`}
-        onClick={() => setIsSidebarOpen(true)}
-      >
-        <Menu size={24} />
-      </button>
+      {!isSidebarOpen && (
+        <button
+          className={`fixed top-4 left-4 z-50 p-2 rounded-lg lg:hidden transition-all ${
+            isScrolled
+              ? "bg-white text-blue-700 shadow-md"
+              : "bg-blue-800 text-white"
+          }`}
+          onClick={() => setIsSidebarOpen(true)}
+        >
+          <Menu size={24} />
+        </button>
+      )}
 
       {/* Sidebar */}
       <aside
@@ -85,7 +112,6 @@ const Navbar = ({ onToggleCollapse }) => {
       >
         {/* Header Sidebar */}
         <div className="relative flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-blue-800">
-          {/* Logo (hanya tampil saat tidak collapse) */}
           {!isCollapsed && (
             <div className="flex items-center space-x-3">
               <img
@@ -112,12 +138,14 @@ const Navbar = ({ onToggleCollapse }) => {
           </button>
 
           {/* Tombol Close (mobile only) */}
-          <button
-            className="absolute right-3 top-3 lg:hidden flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full p-2 transition"
-            onClick={() => setIsSidebarOpen(false)}
-          >
-            <X size={22} />
-          </button>
+          {isSidebarOpen && (
+            <button
+              className="absolute right-3 top-3 lg:hidden flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full p-2 transition"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              <X size={22} />
+            </button>
+          )}
         </div>
 
         {/* Menu Navigasi */}
@@ -138,10 +166,8 @@ const Navbar = ({ onToggleCollapse }) => {
                     ? "bg-blue-100 text-blue-700 font-semibold border-r-4 border-blue-700"
                     : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                 }`}
-                onClick={() => {
-                  setActiveHash(item.href);
-                  isSidebarOpen && setIsSidebarOpen(false);
-                }}
+                // *** INI PERUBAHAN UTAMANYA ***
+                onClick={(e) => handleLinkClick(e, item.href)}
                 title={item.name}
               >
                 <Icon size={24} className={isCollapsed ? "mx-auto" : "mr-3"} />

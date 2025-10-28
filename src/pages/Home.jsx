@@ -18,7 +18,6 @@ const Home = () => {
       <Dosen />
       <Alumni />
       <Berita />
-      <Galeri />
       <Kontak />
     </main>
   );

@@ -41,7 +41,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Link Cepat</h3>
             <ul className="space-y-2">
-              <li><a href="#home" className="text-gray-300 hover:text-secondary transition-colors">Home</a></li>
+              <li><a href="https://pmb.upstegal.ac.id/" target="_blank" className="text-gray-300 hover:text-secondary transition-colors">PPKMB UPS</a></li>
               <li><a href="#tentang" className="text-gray-300 hover:text-secondary transition-colors">Tentang</a></li>
               <li><a href="#dosen" className="text-gray-300 hover:text-secondary transition-colors">Dosen</a></li>
               <li><a href="#berita" className="text-gray-300 hover:text-secondary transition-colors">Berita</a></li>
