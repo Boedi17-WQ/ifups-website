@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ChevronDown } from "lucide-react"; // Pastikan Lucide diimpor jika belum
 
 const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -27,6 +28,21 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [direction, images.length]);
 
+  // --- VVV FUNGSI UNTUK SMOOTH SCROLL VVV ---
+  const scrollToSection = (sectionId) => {
+    // Hapus tanda '#' jika ada
+    const id = sectionId.startsWith('#') ? sectionId.substring(1) : sectionId;
+    const sectionElement = document.getElementById(id);
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: 'smooth' });
+      // Update URL hash jika diperlukan (opsional)
+      window.history.pushState(null, '', sectionId); 
+    } else {
+      console.warn(`Section with ID "${id}" not found.`);
+    }
+  };
+  // --- ^^^ AKHIR FUNGSI SCROLL ^^^ ---
+
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden">
       {/* Wrapper untuk slider */}
@@ -42,28 +58,15 @@ const Hero = () => {
               src={src}
               alt={`Slide ${index + 1}`}
               className="w-full h-full object-cover"
+              onError={(e) => { e.target.onerror = null; e.target.src=`https://placehold.co/1920x1080/003D8D/FFFFFF?text=Gedung+UPS+${index+1}`; }} // Fallback
             />
           </div>
         ))}
       </div>
 
-      {/* Lapisan gradasi biru yang lebih hidup dan lembut */}
-      <div className="absolute inset-0">
-        
-        {/* --- VVV GRADASI UTAMA DIUBAH DI SINI VVV --- */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-400/70 via-blue-600/60 to-blue-900/80 mix-blend-overlay"></div>
-        {/* --- ^^^ GRADASI UTAMA DIUBAH DI SINI ^^^ --- */}
-
-        {/* Aksen gradasi lembut dari atas ke bawah */}
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/60 via-transparent to-blue-700/40 mix-blend-soft-light"></div>
-
-        {/* Cahaya halus dari sisi kanan bawah */}
-        <div className="absolute right-0 bottom-0 w-2/3 h-2/3 bg-gradient-radial from-blue-500/40 via-transparent to-transparent blur-3xl opacity-40"></div>
-
-        {/* Cahaya lembut dari kiri atas */}
-        <div className="absolute left-0 top-0 w-1/2 h-1/2 bg-gradient-radial from-cyan-400/40 via-transparent to-transparent blur-2xl opacity-40"></div>
-      </div>
-
+      {/* Lapisan gradasi biru */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 via-indigo-600/40 to-blue-900/60 bg-[size:200%_auto] animate-gradient-pan"></div>
+      
       {/* Overlay hitam transparan agar teks kontras */}
       <div className="absolute inset-0 bg-black/40"></div>
 
@@ -98,13 +101,44 @@ const Hero = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <button className="bg-yellow-400 text-primary font-bold px-8 py-4 rounded-ifups hover:bg-yellow-500 transform hover:scale-105 transition-all duration-300 shadow-lg">
-            Daftar Sekarang
-          </button>
-          <button className="border-2 border-white text-white font-bold px-8 py-4 rounded-ifups hover:bg-white hover:text-primary transform hover:scale-105 transition-all duration-300">
+         
+            <a
+              href="https://pmb.upstegal.ac.id/"
+              target="_blank" // Buka di tab baru
+              rel="noopener noreferrer" // Keamanan untuk target blank
+              // Semua kelas styling diterapkan di sini
+              className="bg-yellow-400 text-primary font-bold px-8 py-4 rounded-ifups hover:bg-yellow-500 transform hover:scale-105 transition-all duration-300 shadow-lg animate-pulse-slow inline-block"
+            >
+              Daftar Sekarang
+            </a>
+          
+          {/* --- VVV TOMBOL INI DITAMBAHKAN onClick VVV --- */}
+          <button 
+            className="border-2 border-white text-white font-bold px-8 py-4 rounded-ifups hover:bg-white hover:text-primary transform hover:scale-105 transition-all duration-300"
+            onClick={() => scrollToSection('#tentang')} 
+          >
             Pelajari Lebih Lanjut
           </button>
+          {/* --- ^^^ AKHIR PERUBAHAN TOMBOL ^^^ --- */}
         </div>
+
+        {/* Indikator Scroll */}
+        <div
+          className={`absolute bottom-6 left-1/2 -translate-x-1/2 transition-all duration-1000 delay-[1200ms] ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {/* --- VVV Link scroll diubah menjadi button onClick VVV --- */}
+          <button
+            onClick={() => scrollToSection('#tentang')} // Arahkan ke section berikutnya
+            aria-label="Scroll ke bawah"
+            className="text-white animate-bounce-slow"
+          >
+            <ChevronDown size={40} />
+          </button>
+          {/* --- ^^^ AKHIR PERUBAHAN LINK ^^^ --- */}
+        </div>
+        
       </div>
     </section>
   );

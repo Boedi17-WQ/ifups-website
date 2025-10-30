@@ -1,3 +1,5 @@
+// src/components/layout/Footer.jsx
+
 const Footer = () => {
   return (
     <footer className="bg-primary text-white py-12">
@@ -5,32 +7,46 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo dan Deskripsi */}
           <div className="md:col-span-2">
-            <div className="flex items-center mb-4">
-              <span className="text-2xl font-bold">
-                <span className="text-secondary">#WEARE</span>
-                <span className="ml-2">IFUPS</span>
-              </span>
+            
+            {/* --- VVV BAGIAN LOGO DIPERBARUI UNTUK DUA LOGO VVV --- */}
+            <div className="flex items-center space-x-3 mb-4"> 
+              {/* Logo IFUPS */}
+              <img 
+                src="/Logo IFUPS.png" // Path ke logo IFUPS di folder public
+                alt="Logo IFUPS" 
+                className="h-10 object-contain" // Gunakan object-contain
+                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/40x40/003D8D/FECE00?text=IF"; }} // Fallback
+              />
+              {/* Logo WeAreIFUPS */}
+              <img 
+                src="/WeAreIFUPS.svg" // Path ke gambar SVG Anda di folder public
+                alt="#WEARE IFUPS Logo" 
+                className="h-10 object-contain" // Gunakan object-contain
+                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/120x40/003D8D/FECE00?text=UPS"; }} // Fallback
+              />
             </div>
-            <p className="text-gray-300 mb-4">
+            {/* --- ^^^ AKHIR PERUBAHAN LOGO ^^^ --- */}
+            
+            <p className="text-gray-300 mb-4 text-sm leading-relaxed"> {/* Ukuran teks dikecilkan sedikit */}
               Program Studi Informatika Universitas Pancasakti Tegal - 
               Menghasilkan lulusan yang kompeten di bidang teknologi informasi.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-300 hover:text-secondary transition-colors">
-                <span className="sr-only">Facebook</span>
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              {/* Facebook Icon */}
+              <a href="#" aria-label="Facebook" className="text-gray-300 hover:text-secondary transition-colors">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
-              <a href="#" className="text-gray-300 hover:text-secondary transition-colors">
-                <span className="sr-only">Instagram</span>
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.014 5.367 18.647.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.48s.49-2.415 1.418-3.211c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.929.796 1.418 1.947 1.418 3.211s-.49 2.415-1.418 3.211c-.875.807-2.026 1.297-3.323 1.297zm8.062-5.234c0 .652-.052 1.246-.156 1.87h-.104c-1.037 0-1.996-.208-2.919-.625-.104-.052-.208-.104-.26-.104-.365.156-.73.365-1.141.521-.365.156-.73.26-1.141.26s-.781-.104-1.141-.26c-.365-.156-.73-.365-1.096-.521-.104 0-.208.052-.312.104-.923.417-1.882.625-2.919.625h-.104a11.52 11.52 0 0 1-.156-1.87v-1.35c0-.652.052-1.246.156-1.87h.104c1.037 0 1.996-.208 2.919-.625.104-.052.208-.104.312-.104.365.156.73.365 1.096.521.365.156.73.26 1.141.26s.781-.104 1.141-.26c.365-.156.73-.365 1.141-.521.104 0 .208.052.26.104.923.417 1.882.625 2.919.625h.104c.104.624.156 1.218.156 1.87v1.35z"/>
-                </svg>
+              {/* Instagram Icon */}
+              <a href="#" aria-label="Instagram" className="text-gray-300 hover:text-secondary transition-colors">
+                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.053 1.905.24 2.512.487.697.29 1.258.694 1.817 1.253.56.56.962 1.12 1.253 1.817.247.607.434 1.342.487 2.512.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.053 1.17-.24 1.905-.487 2.512a4.896 4.896 0 01-1.253 1.817 4.93 4.93 0 01-1.817 1.253c-.607.247-1.342.434-2.512.487-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.053-1.905-.24-2.512-.487a4.896 4.896 0 01-1.817-1.253 4.93 4.93 0 01-1.253-1.817c-.247-.607-.434-1.342-.487-2.512C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.053-1.17.24-1.905.487-2.512A4.896 4.896 0 014.537 3.38a4.93 4.93 0 011.817-1.253c.607-.247 1.342-.434 2.512-.487C9.916 2.175 10.296 2.163 12 2.163zm0 1.626c-3.142 0-3.488.013-4.717.068-1.077.049-1.68.226-2.146.417a3.27 3.27 0 00-1.218.81 3.27 3.27 0 00-.81 1.218c-.19.466-.368 1.07-.417 2.146-.054 1.23-.068 1.575-.068 4.717s.013 3.488.068 4.717c.049 1.077.226 1.68.417 2.146a3.27 3.27 0 00.81 1.218 3.27 3.27 0 001.218.81c.466.19 1.07.368 2.146.417 1.23.054 1.575.068 4.717.068s3.488-.013 4.717-.068c1.077-.049 1.68-.226 2.146-.417a3.27 3.27 0 001.218-.81 3.27 3.27 0 00.81-1.218c.19-.466.368-1.07.417-2.146.054-1.23.068-1.575.068-4.717s-.013-3.488-.068-4.717c-.049-1.077-.226-1.68-.417-2.146a3.27 3.27 0 00-.81-1.218 3.27 3.27 0 00-1.218-.81c-.466-.19-1.07-.368-2.146-.417C15.488 3.799 15.142 3.786 12 3.786zM12 7.188a4.812 4.812 0 100 9.624 4.812 4.812 0 000-9.624zm0 7.998a3.186 3.186 0 110-6.372 3.186 3.186 0 010 6.372zm5.003-7.872a1.146 1.146 0 100 2.292 1.146 1.146 0 000-2.292z"/>
+                 </svg>
               </a>
-              <a href="#" className="text-gray-300 hover:text-secondary transition-colors">
-                <span className="sr-only">YouTube</span>
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              {/* YouTube Icon */}
+              <a href="#" aria-label="YouTube" className="text-gray-300 hover:text-secondary transition-colors">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
               </a>
@@ -39,28 +55,28 @@ const Footer = () => {
 
           {/* Link Cepat */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Link Cepat</h3>
-            <ul className="space-y-2">
-              <li><a href="https://pmb.upstegal.ac.id/" target="_blank" className="text-gray-300 hover:text-secondary transition-colors">PPKMB UPS</a></li>
-              <li><a href="#tentang" className="text-gray-300 hover:text-secondary transition-colors">Tentang</a></li>
-              <li><a href="#dosen" className="text-gray-300 hover:text-secondary transition-colors">Dosen</a></li>
-              <li><a href="#berita" className="text-gray-300 hover:text-secondary transition-colors">Berita</a></li>
+            <h3 className="text-lg font-semibold mb-4">Info Selanjutnya</h3>
+            <ul className="space-y-2 text-sm"> {/* Ukuran teks dikecilkan */}
+              <li><a href="https://pmb.upstegal.ac.id/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-secondary transition-colors">PMB-UPS</a></li>
+              <li><a href="https://pmb.upstegal.ac.id/prodi" className="text-gray-300 hover:text-secondary transition-colors">Program Studi</a></li>
+              <li><a href="#dosen" className="text-gray-300 hover:text-secondary transition-colors">UPS-Tegal</a></li>
+              <li><a href="#berita" className="text-gray-300 hover:text-secondary transition-colors">Perpustakan</a></li>
             </ul>
           </div>
 
           {/* Kontak */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Kontak</h3>
-            <address className="not-italic text-gray-300">
+            <address className="not-italic text-gray-300 text-sm space-y-1"> {/* Ukuran teks dikecilkan */}
               <p>Jl. Halmahera No.1</p>
               <p>Tegal, Jawa Tengah</p>
-              <p className="mt-2">Email: info@ifups.tegal.ac.id</p>
-              <p>Telp: (0283) 1234567</p>
+              <p className="mt-2">Email: <a href="mailto:info@ifups.tegal.ac.id" className="hover:text-secondary">info@ifups.tegal.ac.id</a></p>
+              <p>Telp: <a href="tel:02831234567" className="hover:text-secondary">(0283) 1234567</a></p>
             </address>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400"> {/* Ukuran teks dikecilkan */}
           <p>&copy; {new Date().getFullYear()} Prodi Informatika UPS Tegal. All rights reserved.</p>
         </div>
       </div>
@@ -69,3 +85,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

@@ -1,65 +1,59 @@
-import { Link } from "react-router-dom"; // <-- Impor Link
-import { Briefcase, Linkedin } from "lucide-react"; // <-- Impor ikon yang dibutuhkan
+import { Link } from "react-router-dom";
+import { Undo2, Linkedin, Briefcase } from "lucide-react"; // Impor ikon
+import { allAlumni } from "../../data/alumniData"; // Impor data alumni
 
-// Anda mungkin sudah memiliki data alumni di sini untuk ditampilkan di Home
-const featuredAlumni = [
-  // ... ambil beberapa alumni dari data asli ...
-  {
-    id: 1,
-    nama: "Andi Pratama, S.Kom.",
-    angkatan: 2018,
-    pekerjaan: "Software Engineer di Gojek",
-    testimoni: "Kuliah di IF UPS memberikan fondasi yang kuat...",
-    foto: "/images/alumni/andi.jpg",
-    linkedin: "https://linkedin.com/in/andipratama", // Tambahkan linkedin jika ada
-  },
-  {
-    id: 2,
-    nama: "Citra Dewi, S.Kom.",
-    angkatan: 2019,
-    pekerjaan: "UI/UX Designer di Tokopedia",
-    testimoni: "Mata kuliah Interaksi Manusia Komputer sangat membantu...",
-    foto: "/images/alumni/citra.jpg",
-    linkedin: "https://linkedin.com/in/citradewi",
-  },
-  {
-    id: 3,
-    nama: "Bayu Aji, S.Kom.",
-    angkatan: 2017,
-    pekerjaan: "Data Analyst di Shopee",
-    testimoni: "Kemampuan analisis data yang saya pelajari sangat berguna...",
-    foto: "/images/alumni/bayu.jpg",
-    linkedin: "https://linkedin.com/in/bayuaji",
-  },
-  // Tambahkan satu lagi jika ingin menampilkan 4
-  {
-    id: 4, // Ganti ID jika perlu
-    nama: "Rina Sari, S.Kom.", // Ganti Nama
-    angkatan: 2020, // Ganti Angkatan
-    pekerjaan: "System Administrator", // Ganti Pekerjaan
-    testimoni: "...", // Ganti Testimoni
-    foto: "/images/alumni/rina.jpg", // Ganti foto
-    linkedin: null, // Kosongkan jika tidak ada
-  },
-];
+const AlumniIndex = () => {
 
+  // Penanganan jika data kosong
+  if (!allAlumni || allAlumni.length === 0) {
+     return (
+       <div className="py-24 bg-white min-h-screen relative flex flex-col items-center justify-center text-center px-4">
+         <Link
+           to="/"
+           aria-label="Kembali ke Halaman Utama"
+           className="absolute top-12 left-10 md:left-12 z-20 p-2 rounded-full text-primary bg-white shadow-md hover:bg-gray-100 hover:shadow-lg hover:text-secondary transition-all"
+         >
+           <Undo2 size={28} />
+         </Link>
+         <h1 className="text-4xl font-bold text-primary mb-4">Oops!</h1>
+         <p className="text-xl text-gray-600">Data alumni tidak dapat dimuat.</p>
+         <p className="text-sm text-gray-400 mt-2">(Pastikan file 'src/data/alumniData.js' ada dan mengekspor 'allAlumni'.)</p>
+         <Link
+           to="/"
+           className="mt-6 px-6 py-2 bg-primary text-white rounded-full hover:bg-blue-800 transition-colors"
+         >
+           Kembali ke Halaman Utama
+         </Link>
+       </div>
+     );
+  }
 
-const Alumni = () => {
   return (
-    <section id="alumni" className="py-20 bg-white"> {/* Sesuaikan bg jika perlu */}
+    <div className="py-24 bg-white min-h-screen relative">
+      {/* Tombol kembali */}
+      <Link
+        to="/"
+        aria-label="Kembali ke Halaman Utama"
+        className="absolute top-12 left-10 md:left-12 z-20 p-2 rounded-full text-primary bg-white shadow-md hover:bg-gray-100 hover:shadow-lg hover:text-secondary transition-all"
+      >
+        <Undo2 size={28} />
+      </Link>
+
       <div className="container mx-auto px-4">
-        {/* Judul Section */}
+        {/* Judul Halaman */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">ALUMNI KAMI</h2>
-          <p className="text-xl text-gray-600">Apa Kata Mereka?</p>
-          <div className="w-20 h-1 bg-secondary mx-auto mt-4"></div>
+          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+            Alumni Kami
+          </h1>
+          <p className="text-xl text-gray-600">
+            Jejak Lulusan Prodi Informatika Universitas Pancasakti Tegal
+          </p>
+          <div className="w-24 h-1 bg-secondary mx-auto mt-6"></div>
         </div>
 
-        {/* --- VVV GRID KARTU DIUBAH DESAINNYA VVV --- */}
-        {/* Tampilkan featured alumni dengan desain kartu foto */}
-        {/* Mungkin cukup 4 kolom di layar besar */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto mb-14">
-          {featuredAlumni.map((alumnus) => (
+        {/* --- VVV GRID KARTU ALUMNI DENGAN DESAIN BARU VVV --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {allAlumni.map((alumnus) => (
             <div
               key={alumnus.id}
               className="bg-white rounded-ifups overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 flex flex-col"
@@ -92,8 +86,10 @@ const Alumni = () => {
                    <span className="font-medium">{alumnus.pekerjaan}</span>
                 </div>
 
-                {/* Kosongkan bagian testimoni atau isi jika perlu */}
-                <div className="flex-grow"></div> 
+                {/* Testimoni Singkat (jika perlu) atau kosongkan */}
+                {/* <p className="text-sm text-gray-600 italic mb-4 flex-grow">
+                   "{alumnus.testimoni}"
+                 </p> */}
 
                 {/* Link LinkedIn */}
                 {alumnus.linkedin && (
@@ -118,21 +114,12 @@ const Alumni = () => {
             </div>
           ))}
         </div>
-        {/* --- ^^^ AKHIR GRID KARTU ^^^ --- */}
+        {/* --- ^^^ AKHIR GRID KARTU ALUMNI ^^^ --- */}
 
-        {/* Tombol Lihat Semua Alumni */}
-        <div className="text-center">
-          <Link
-            to="/alumni"
-            className="bg-primary text-white px-10 py-3 rounded-ifups hover:bg-blue-900 transition-colors inline-block"
-          >
-            Lihat Semua Alumni
-          </Link>
-        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Alumni;
+export default AlumniIndex;
 

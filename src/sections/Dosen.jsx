@@ -1,31 +1,34 @@
-const Dosen = () => {
-  const lecturers = [
-    {
-      name: "Prof.eko",
-      position: "Guru Besar Artificial Intelligence",
-      photo: "/contoh.jpg",
-      expertise: ["AI", "Machine Learning", "Data Science"]
-    },
-    {
-      name: "Prof.eko",
-      position: "Ketua Program Studi",
-      photo: "/images/dosen2.jpg",
-      expertise: ["Web Development", "Database", "Software Engineering"]
-    },
-    {
-      name: "Prof.eko",
-      position: "Dosen Senior",
-      photo: "/images/dosen3.jpg",
-      expertise: ["Networking", "Cyber Security", "Cloud Computing"]
-    },
-    {
-      name: "Prof.eko",
-      position: "Dosen Multimedia",
-      photo: "/images/dosen4.jpg",
-      expertise: ["UI/UX Design", "Graphic Design", "Animation"]
-    }
-  ];
+import { Link } from "react-router-dom"; // <-- 1. IMPORT Link
 
+// Data contoh (seperti yang Anda berikan)
+const lecturers = [
+  {
+    name: "Prof.eko",
+    position: "Guru Besar Artificial Intelligence",
+    photo: "/contoh.jpg",
+    expertise: ["AI", "Machine Learning", "Data Science"]
+  },
+  {
+    name: "Prof.eko",
+    position: "Ketua Program Studi",
+    photo: "/images/dosen2.jpg",
+    expertise: ["Web Development", "Database", "Software Engineering"]
+  },
+  {
+    name: "Prof.eko",
+    position: "Dosen Senior",
+    photo: "/images/dosen3.jpg",
+    expertise: ["Networking", "Cyber Security", "Cloud Computing"]
+  },
+  {
+    name: "Prof.eko",
+    position: "Dosen Multimedia",
+    photo: "/images/dosen4.jpg",
+    expertise: ["UI/UX Design", "Graphic Design", "Animation"]
+  }
+];
+
+const Dosen = () => {
   return (
     <section id="dosen" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -36,12 +39,13 @@ const Dosen = () => {
           <div className="w-20 h-1 bg-secondary mx-auto mt-4"></div>
         </div>
 
-        {/* Grid Card Dosen */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto">
+        {/* --- VVV GRID CONTAINER LEBARNYA DIUBAH VVV --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto"> {/* Diubah ke max-w-7xl */}
           {lecturers.map((lecturer, index) => (
+            // --- VVV SUDUT KARTU DIUBAH VVV ---
             <div
               key={index}
-              className="bg-white rounded-ifups shadow-md hover:shadow-xl transition-all overflow-hidden"
+              className="bg-white shadow-md hover:shadow-xl transition-all overflow-hidden" // rounded-ifups dihapus
             >
               {/* Foto Dosen dengan Gradasi dan Nama */}
               <div className="relative">
@@ -49,6 +53,7 @@ const Dosen = () => {
                   src={lecturer.photo}
                   alt={lecturer.name}
                   className="w-full h-64 object-cover"
+                  onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x256/cccccc/ffffff?text=Foto+Dosen"; }} // Fallback
                 />
                 {/* Overlay gradasi biru di bawah foto */}
                 <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-blue-800 to-transparent flex flex-col justify-end items-center text-white p-4">
@@ -70,10 +75,12 @@ const Dosen = () => {
                   ))}
                 </div>
 
-                {/* Tombol Lihat Profil */}
-                <button className="mt-2 bg-blue-800 text-white px-6 py-2 rounded-ifups hover:bg-blue-900 transition-colors">
+                {/* --- VVV TOMBOL LIHAT PROFIL DIHAPUS VVV --- */}
+                {/* <button className="mt-2 bg-blue-800 text-white px-6 py-2 rounded-ifups hover:bg-blue-900 transition-colors">
                   Lihat Profil
-                </button>
+                </button> */}
+                {/* --- ^^^ AKHIR PENGHAPUSAN TOMBOL ^^^ --- */}
+                
               </div>
             </div>
           ))}
@@ -81,9 +88,12 @@ const Dosen = () => {
 
         {/* Tombol Lihat Semua Dosen */}
         <div className="text-center mt-14">
-          <button className="bg-primary text-white px-10 py-3 rounded-ifups hover:bg-blue-900 transition-colors">
+          <Link
+            to="/dosen" 
+            className="bg-primary text-white px-10 py-3 rounded-ifups hover:bg-blue-900 transition-colors inline-block" 
+          >
             Lihat Semua Dosen
-          </button>
+          </Link>
         </div>
       </div>
     </section>
@@ -91,3 +101,4 @@ const Dosen = () => {
 };
 
 export default Dosen;
+

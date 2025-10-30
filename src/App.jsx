@@ -6,9 +6,12 @@ import ScrollToTop from './components/layout/ScrollToTop';
 import Home from './pages/Home';
 import Maintenance from './pages/Maintenance';
 import BeritaIndex from './pages/berita/BeritaIndex';
-// --- VVV IMPOR BERITA DETAIL DIAKTIFKAN VVV ---
-import BeritaDetail from './pages/berita/BeritaDetail'; // <-- 1. AKTIFKAN IMPOR INI
-// import DosenIndex from './pages/dosen/DosenIndex';
+import BeritaDetail from './pages/berita/BeritaDetail';
+import DosenIndex from './pages/dosen/DosenIndex';
+
+// --- VVV IMPOR AlumniIndex DIAKTIFKAN VVV ---
+import AlumniIndex from './pages/alumni/AlumniIndex'; // <-- 1. AKTIFKAN IMPOR INI
+// --- ^^^ AKHIR IMPOR AlumniIndex ^^^ ---
 
 import { appSettings } from './config/settings';
 
@@ -17,8 +20,10 @@ const AppContent = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
-  // Daftar halaman full-screen
-  const fullScreenPages = ['/berita', '/dosen'];
+  // --- VVV TAMBAHKAN /alumni KE fullScreenPages VVV ---
+  const fullScreenPages = ['/berita', '/dosen', '/alumni']; // <-- 2. TAMBAHKAN /alumni DI SINI
+  // --- ^^^ AKHIR PERUBAHAN ^^^ ---
+
   const isFullScreen = fullScreenPages.some(path => location.pathname.startsWith(path));
 
   const handleCollapseToggle = (collapsed) => {
@@ -42,9 +47,13 @@ const AppContent = () => {
           <Route path="/" element={<Home />} />
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/berita" element={<BeritaIndex />} />
-          {/* --- VVV RUTE BERITA DETAIL DIAKTIFKAN VVV --- */}
-          <Route path="/berita/:id" element={<BeritaDetail />} /> {/* <-- 2. AKTIFKAN RUTE INI */}
-          {/* <Route path="/dosen" element={<DosenIndex />} /> */}
+          <Route path="/berita/:id" element={<BeritaDetail />} />
+          <Route path="/dosen" element={<DosenIndex />} />
+
+          {/* --- VVV RUTE AlumniIndex DIAKTIFKAN VVV --- */}
+          <Route path="/alumni" element={<AlumniIndex />} /> {/* <-- 3. AKTIFKAN RUTE INI */}
+          {/* --- ^^^ AKHIR RUTE AlumniIndex ^^^ --- */}
+
         </Routes>
         <Footer />
       </main>
