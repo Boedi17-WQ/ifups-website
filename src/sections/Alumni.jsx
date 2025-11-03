@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"; // <-- Impor Link
-import { Briefcase, Linkedin } from "lucide-react"; // <-- Impor ikon yang dibutuhkan
+// Ikon tidak lagi diperlukan untuk desain baru ini
+// import { Briefcase, Linkedin } from "lucide-react"; 
 
-// Anda mungkin sudah memiliki data alumni di sini untuk ditampilkan di Home
+// Data featured alumni (data tetap sama)
 const featuredAlumni = [
-  // ... ambil beberapa alumni dari data asli ...
   {
     id: 1,
     nama: "Andi Pratama, S.Kom.",
@@ -11,7 +11,7 @@ const featuredAlumni = [
     pekerjaan: "Software Engineer di Gojek",
     testimoni: "Kuliah di IF UPS memberikan fondasi yang kuat...",
     foto: "/images/alumni/andi.jpg",
-    linkedin: "https://linkedin.com/in/andipratama", // Tambahkan linkedin jika ada
+    linkedin: "https://linkedin.com/in/andipratama",
   },
   {
     id: 2,
@@ -31,22 +31,21 @@ const featuredAlumni = [
     foto: "/images/alumni/bayu.jpg",
     linkedin: "https://linkedin.com/in/bayuaji",
   },
-  // Tambahkan satu lagi jika ingin menampilkan 4
   {
-    id: 4, // Ganti ID jika perlu
-    nama: "Rina Sari, S.Kom.", // Ganti Nama
-    angkatan: 2020, // Ganti Angkatan
-    pekerjaan: "System Administrator", // Ganti Pekerjaan
-    testimoni: "...", // Ganti Testimoni
-    foto: "/images/alumni/rina.jpg", // Ganti foto
-    linkedin: null, // Kosongkan jika tidak ada
+    id: 4,
+    nama: "Rina Sari, S.Kom.",
+    angkatan: 2020,
+    pekerjaan: "System Administrator",
+    testimoni: "...",
+    foto: "/images/alumni/rina.jpg",
+    linkedin: null,
   },
 ];
 
 
 const Alumni = () => {
   return (
-    <section id="alumni" className="py-20 bg-white"> {/* Sesuaikan bg jika perlu */}
+    <section id="alumni" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         {/* Judul Section */}
         <div className="text-center mb-16">
@@ -55,16 +54,15 @@ const Alumni = () => {
           <div className="w-20 h-1 bg-secondary mx-auto mt-4"></div>
         </div>
 
-        {/* --- VVV GRID KARTU DIUBAH DESAINNYA VVV --- */}
-        {/* Tampilkan featured alumni dengan desain kartu foto */}
-        {/* Mungkin cukup 4 kolom di layar besar */}
+        {/* --- VVV GRID KARTU DISAMAKAN DENGAN DESAIN DOSEN VVV --- */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto mb-14">
           {featuredAlumni.map((alumnus) => (
             <div
               key={alumnus.id}
-              className="bg-white rounded-ifups overflow-hidden shadow-lg hover:shadow-xl transition-shadow border border-gray-100 flex flex-col"
+              // Menghapus rounded-ifups & border, menambahkan hover:translate
+              className="bg-white shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1"
             >
-              {/* Foto Alumni dengan Gradasi Kuning dan Nama */}
+              {/* Foto Alumni dengan Gradasi Biru (disamakan Dosen) */}
               <div className="relative">
                 <img
                   src={alumnus.foto}
@@ -75,46 +73,19 @@ const Alumni = () => {
                     e.target.src = `https://placehold.co/400x288/cccccc/ffffff?text=Foto+${alumnus.nama.split(" ")[0]}`; // Fallback
                   }}
                 />
-                {/* Overlay gradasi kuning */}
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-secondary via-secondary/80 to-transparent flex flex-col justify-end items-center text-primary p-4">
-                  <h3 className="text-lg font-semibold drop-shadow-sm text-center">
+                {/* --- VVV GRADASI DIUBAH KEMBALI KE KUNING (SECONDARY) VVV --- */}
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-secondary via-secondary/80 to-transparent flex flex-col justify-end items-start text-primary p-5">
+                  <h3 className="text-base font-semibold drop-shadow-sm">
                     {alumnus.nama}
                   </h3>
-                   <p className="text-xs font-medium text-blue-900">Angkatan {alumnus.angkatan}</p>
+                   {/* Menampilkan pekerjaan (bukan angkatan) agar mirip Dosen */}
+                   <p className="text-sm text-blue-900 font-medium">{alumnus.pekerjaan}</p> 
                 </div>
+                {/* --- ^^^ AKHIR PERUBAHAN GRADASI ^^^ --- */}
               </div>
 
-              {/* Info Alumni di Bawah Foto */}
-              <div className="p-5 text-center flex flex-col flex-grow">
-                 {/* Pekerjaan */}
-                <div className="flex items-center justify-center text-sm text-gray-700 mb-4">
-                   <Briefcase size={16} className="mr-2 text-primary flex-shrink-0" />
-                   <span className="font-medium">{alumnus.pekerjaan}</span>
-                </div>
-
-                {/* Kosongkan bagian testimoni atau isi jika perlu */}
-                <div className="flex-grow"></div> 
-
-                {/* Link LinkedIn */}
-                {alumnus.linkedin && (
-                  <div className="mt-auto pt-4 border-t border-gray-100">
-                    <a
-                      href={alumnus.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium"
-                    >
-                      <Linkedin size={16} className="mr-1" />
-                      Profil LinkedIn
-                    </a>
-                  </div>
-                )}
-                 {/* Jika tidak ada LinkedIn, tampilkan placeholder agar tinggi kartu sama */}
-                 {!alumnus.linkedin && (
-                   <div className="mt-auto pt-4 border-t border-transparent h-[36px]"> {/* Placeholder tinggi */}
-                   </div>
-                 )}
-              </div>
+              
+              
             </div>
           ))}
         </div>

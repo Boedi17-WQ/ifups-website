@@ -1,37 +1,13 @@
-import { Link } from "react-router-dom"; // <-- 1. IMPORT LINK
+// --- VVV Impor Link dan Data VVV ---
+import { Link } from "react-router-dom"; 
+// Pastikan path ini benar (dari src/sections/ ke src/data/)
+import { allNews } from "../data/beritaData"; 
+// --- ^^^ Akhir Impor ^^^ ---
+
+// Ambil 4 berita pertama untuk ditampilkan di Halaman Utama
+const featuredNews = allNews.slice(0, 4);
 
 const Berita = () => {
-  const news = [
-    {
-      title: "Mahasiswa Informatika Juara Hackathon Nasional 2024",
-      date: "15 Agustus 2024",
-      excerpt: "Tim mahasiswa Informatika UPS berhasil meraih juara 1 dalam kompetisi hackathon nasional...",
-      image: "/images/berita/hackathon.jpg", 
-      category: "Prestasi"
-    },
-    {
-      title: "Workshop Web Development Modern dengan React.js",
-      date: "10 Agustus 2024",
-      excerpt: "Program studi menyelenggarakan workshop web development untuk mahasiswa semester 5...",
-      image: "/gedungUps1.jpg",
-      category: "Acara"
-    },
-    {
-      title: "Kerjasama dengan Perusahaan Tech Terkemuka",
-      date: "5 Agustus 2024",
-      excerpt: "Prodi Informatika menjalin kerjasama dengan perusahaan tech untuk program magang...",
-      image: "/images/berita/kerjasama.jpg",
-      category: "Kerjasama"
-    },
-    {
-      title: "Peluncuran Laboratorium AI dan Machine Learning",
-      date: "1 Agustus 2024",
-      excerpt: "Laboratorium baru dengan spesialisasi AI dan ML resmi dibuka untuk mendukung penelitian...",
-      image: "/images/berita/lab-ai.jpg",
-      category: "Fasilitas"
-    }
-  ];
-
   return (
     <section id="berita" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -41,14 +17,16 @@ const Berita = () => {
           <div className="w-20 h-1 bg-secondary mx-auto mt-4"></div>
         </div>
 
+        {/* --- VVV Gunakan 'featuredNews' dan 'item.id' VVV --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {news.map((item, index) => (
-            <article key={index} className="bg-white rounded-ifups overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+          {featuredNews.map((item) => ( 
+            <article key={item.id} className="bg-white rounded-ifups overflow-hidden shadow-md hover:shadow-lg transition-shadow">
               
               <img
                 src={item.image}
                 alt={item.title}
                 className="w-full aspect-video object-cover"
+                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/600x338/cccccc/ffffff?text=Gambar+Error"; }} // Fallback
               />
               
               <div className="p-6">
@@ -62,28 +40,32 @@ const Berita = () => {
                   {item.title}
                 </h3>
                 <p className="text-gray-700 mb-4">{item.excerpt}</p>
-                {/* CATATAN: Tombol "Baca Selengkapnya" ini juga idealnya 
-                  menggunakan <Link> ke halaman detail, tapi untuk sekarang
-                  kita biarkan dulu sesuai permintaan Anda.
-                */}
-                <button className="text-primary hover:text-secondary font-medium transition-colors">
+                
+                {/* --- VVV TOMBOL DIUBAH MENJADI LINK DINAMIS VVV --- */}
+                <Link
+                  to={`/berita/${item.id}`} // Arahkan ke URL detail
+                  className="text-primary hover:text-secondary font-medium transition-colors"
+                >
                   Baca Selengkapnya →
-                </button>
+                </Link>
+                {/* --- ^^^ AKHIR PERUBAHAN LINK ^^^ --- */}
+                
               </div>
             </article>
           ))}
         </div>
+        {/* --- ^^^ AKHIR PERUBAHAN MAP ^^^ --- */}
 
-        {/* --- VVV BAGIAN INI DIUBAH DARI <button> MENJADI <Link> VVV --- */}
+
+        {/* Tombol "Lihat Semua Berita" sudah benar */}
         <div className="text-center mt-12">
           <Link
-            to="/berita" // <-- 2. TAMBAHKAN 'to' KE HALAMAN 'BeritaIndex'
+            to="/berita" 
             className="bg-primary text-white px-8 py-3 rounded-ifups hover:bg-blue-800 transition-colors"
           >
             Lihat Semua Berita
           </Link>
         </div>
-        {/* --- ^^^ AKHIR PERUBAHAN ^^^ --- */}
 
       </div>
     </section>

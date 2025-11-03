@@ -39,49 +39,35 @@ const Dosen = () => {
           <div className="w-20 h-1 bg-secondary mx-auto mt-4"></div>
         </div>
 
-        {/* --- VVV GRID CONTAINER LEBARNYA DIUBAH VVV --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto"> {/* Diubah ke max-w-7xl */}
+        {/* Grid Card Dosen */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto">
           {lecturers.map((lecturer, index) => (
-            // --- VVV SUDUT KARTU DIUBAH VVV ---
             <div
               key={index}
-              className="bg-white shadow-md hover:shadow-xl transition-all overflow-hidden" // rounded-ifups dihapus
+              // --- VVV GARIS KUNING DITAMBAHKAN DI SINI VVV ---
+              className="bg-white shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1 border-b-4 border-secondary" 
             >
-              {/* Foto Dosen dengan Gradasi dan Nama */}
+              {/* --- KARTU DIJADIKAN SATU (HANYA FOTO & GRADASI) --- */}
               <div className="relative">
                 <img
                   src={lecturer.photo}
                   alt={lecturer.name}
-                  className="w-full h-64 object-cover"
-                  onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x256/cccccc/ffffff?text=Foto+Dosen"; }} // Fallback
+                  className="w-full h-72 object-cover" // Foto dibuat lebih tinggi
+                  onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x288/cccccc/ffffff?text=Foto+Dosen"; }} // Fallback
                 />
                 {/* Overlay gradasi biru di bawah foto */}
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-blue-800 to-transparent flex flex-col justify-end items-center text-white p-4">
-                  <h3 className="text-lg font-semibold drop-shadow-md">{lecturer.name}</h3>
+                {/* Gradasi dibuat lebih tinggi & halus, teks rata kiri */}
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-primary via-primary/80 to-transparent flex flex-col justify-end items-start text-white p-3"> 
+                  
+                  {/* --- VVV UKURAN FONT DIUBAH DARI text-lg MENJADI text-base VVV --- */}
+                  <h3 className="text-base font-semibold drop-shadow-md">{lecturer.name}</h3>
+                  {/* --- ^^^ AKHIR PERUBAHAN FONT ^^^ --- */}
+                  
+                  {/* Jabatan dipindahkan ke sini */}
+                  <p className="text-sm text-gray-200">{lecturer.position}</p> 
                 </div>
               </div>
-
-              {/* Info Dosen */}
-              <div className="p-6 text-center">
-                <p className="text-gray-600 font-medium mb-3">{lecturer.position}</p>
-                <div className="flex flex-wrap justify-center gap-2 mb-4">
-                  {lecturer.expertise.map((skill, skillIndex) => (
-                    <span
-                      key={skillIndex}
-                      className="bg-gray-100 text-primary text-sm px-3 py-1 rounded-full"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-
-                {/* --- VVV TOMBOL LIHAT PROFIL DIHAPUS VVV --- */}
-                {/* <button className="mt-2 bg-blue-800 text-white px-6 py-2 rounded-ifups hover:bg-blue-900 transition-colors">
-                  Lihat Profil
-                </button> */}
-                {/* --- ^^^ AKHIR PENGHAPUSAN TOMBOL ^^^ --- */}
-                
-              </div>
+              {/* --- Bagian info putih di bawah dihapus --- */}
             </div>
           ))}
         </div>
