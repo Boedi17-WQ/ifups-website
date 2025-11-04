@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import { allNews } from "../data/beritaData"; 
 // --- ^^^ Akhir Impor ^^^ ---
 
-// Ambil 4 berita pertama untuk ditampilkan di Halaman Utama
-const featuredNews = allNews.slice(0, 4);
+// --- VVV Ambil 3 berita pertama (sesuai screenshot) VVV ---
+const featuredNews = allNews.slice(0, 3);
+// --- ^^^ Akhir pengambilan data ^^^ ---
 
 const Berita = () => {
   return (
@@ -17,51 +18,57 @@ const Berita = () => {
           <div className="w-20 h-1 bg-secondary mx-auto mt-4"></div>
         </div>
 
-        {/* --- VVV Gunakan 'featuredNews' dan 'item.id' VVV --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {featuredNews.map((item) => ( 
-            <article key={item.id} className="bg-white rounded-ifups overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-              
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full aspect-video object-cover"
-                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/600x338/cccccc/ffffff?text=Gambar+Error"; }} // Fallback
-              />
-              
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="bg-secondary text-primary text-sm px-3 py-1 rounded-full font-medium">
-                    {item.category}
-                  </span>
-                  <time className="text-sm text-gray-500">{item.date}</time>
-                </div>
-                <h3 className="text-xl font-semibold text-primary mb-3 hover:text-secondary transition-colors">
-                  {item.title}
+        {/* --- VVV GRID DAN DESAIN KARTU DIUBAH (SESUAI FOTO) VVV --- */}
+        {/* Menggunakan 3 kolom dan max-w-6xl */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {featuredNews.map((item) => (
+            // --- KARTU DIUBAH MENJADI DIV (TANPA KARTU) ---
+            <div key={item.id} className="flex flex-col h-full"> 
+              {/* Gambar dengan rounded corner */}
+              <Link to={`/berita/${item.id}`} className="block mb-4 overflow-hidden  shadow-md group">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-110" // Tinggi pakai aspect-video
+                  onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/600x338/cccccc/ffffff?text=Gambar+Error"; }} // Fallback
+                />
+              </Link>
+
+              {/* Konten Teks di Bawah Gambar */}
+              <div className="flex flex-col flex-grow">
+                {/* Tanggal */}
+                <time className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2">
+                  {item.date} 
+                </time>
+                
+                {/* Judul (dibuat lebih tinggi dan line-clamp) */}
+                <h3 className="text-lg font-bold text-primary mb-4 h-20 line-clamp-3">
+                  <Link to={`/berita/${item.id}`} className="hover:text-secondary transition-colors">
+                    {item.title}
+                  </Link>
                 </h3>
-                <p className="text-gray-700 mb-4">{item.excerpt}</p>
-                
-                {/* --- VVV TOMBOL DIUBAH MENJADI LINK DINAMIS VVV --- */}
-                <Link
-                  to={`/berita/${item.id}`} // Arahkan ke URL detail
-                  className="text-primary hover:text-secondary font-medium transition-colors"
-                >
-                  Baca Selengkapnya →
-                </Link>
-                {/* --- ^^^ AKHIR PERUBAHAN LINK ^^^ --- */}
-                
+
+                {/* Tombol Selanjutnya (Kuning) */}
+                <div className="mt-auto"> {/* Tombol rata bawah */}
+                  <Link
+                    to={`/berita/${item.id}`} 
+                    className="inline-block bg-secondary text-primary font-semibold px-6 py-2 hover:bg-yellow-400 transition-colors"
+                  >
+                    Selengkapnya
+                  </Link>
+                </div>
               </div>
-            </article>
+            </div>
           ))}
         </div>
-        {/* --- ^^^ AKHIR PERUBAHAN MAP ^^^ --- */}
+        {/* --- ^^^ AKHIR PERUBAHAN GRID & KARTU ^^^ --- */}
 
 
-        {/* Tombol "Lihat Semua Berita" sudah benar */}
-        <div className="text-center mt-12">
+        {/* Tombol "Lihat Semua Berita" (Style disamakan) */}
+        <div className="text-center mt-16"> {/* Margin atas disamakan */}
           <Link
             to="/berita" 
-            className="bg-primary text-white px-8 py-3 rounded-ifups hover:bg-blue-800 transition-colors"
+            className="inline-block bg-secondary text-primary font-semibold px-8 py-3 rounded-ifups shadow-md hover:bg-yellow-400 hover:shadow-lg transition-all duration-300"
           >
             Lihat Semua Berita
           </Link>
@@ -73,3 +80,4 @@ const Berita = () => {
 };
 
 export default Berita;
+

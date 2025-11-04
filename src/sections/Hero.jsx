@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react"; // Pastikan Lucide diimpor jika belum
+// --- VVV IMPORT LINK DITAMBAHKAN VVV ---
+import { Link } from "react-router-dom";
+// --- ^^^ AKHIR IMPORT ^^^ ---
 
 const Hero = () => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -28,19 +31,19 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [direction, images.length]);
 
-  // --- VVV FUNGSI UNTUK SMOOTH SCROLL VVV ---
-  const scrollToSection = (sectionId) => {
-    // Hapus tanda '#' jika ada
-    const id = sectionId.startsWith('#') ? sectionId.substring(1) : sectionId;
-    const sectionElement = document.getElementById(id);
-    if (sectionElement) {
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
-      // Update URL hash jika diperlukan (opsional)
-      window.history.pushState(null, '', sectionId); 
-    } else {
-      console.warn(`Section with ID "${id}" not found.`);
-    }
-  };
+  // --- VVV FUNGSI scrollToSection DIHAPUS KARENA DIGANTI <Link> VVV ---
+  // const scrollToSection = (sectionId) => {
+  //   // Hapus tanda '#' jika ada
+  //   const id = sectionId.startsWith('#') ? sectionId.substring(1) : sectionId;
+  //   const sectionElement = document.getElementById(id);
+  //   if (sectionElement) {
+  //     sectionElement.scrollIntoView({ behavior: 'smooth' });
+  //     // Update URL hash jika diperlukan (opsional)
+  //     window.history.pushState(null, '', sectionId); 
+  //   } else {
+  //     console.warn(`Section with ID "${id}" not found.`);
+  //   }
+  // };
   // --- ^^^ AKHIR FUNGSI SCROLL ^^^ ---
 
   return (
@@ -101,7 +104,7 @@ const Hero = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-         
+          
             <a
               href="https://pmb.upstegal.ac.id/"
               target="_blank" // Buka di tab baru
@@ -112,13 +115,13 @@ const Hero = () => {
               Daftar Sekarang
             </a>
           
-          {/* --- VVV TOMBOL INI DITAMBAHKAN onClick VVV --- */}
-          <button 
+          {/* --- VVV <button> DIUBAH MENJADI <Link> VVV --- */}
+          <Link 
+            to="/about" // Mengarah ke halaman /about (AboutIndex)
             className="border-2 border-white text-white font-bold px-8 py-4 rounded-ifups hover:bg-white hover:text-primary transform hover:scale-105 transition-all duration-300"
-            onClick={() => scrollToSection('#tentang')} 
           >
             Pelajari Lebih Lanjut
-          </button>
+          </Link>
           {/* --- ^^^ AKHIR PERUBAHAN TOMBOL ^^^ --- */}
         </div>
 
@@ -128,14 +131,14 @@ const Hero = () => {
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* --- VVV Link scroll diubah menjadi button onClick VVV --- */}
-          <button
-            onClick={() => scrollToSection('#tentang')} // Arahkan ke section berikutnya
-            aria-label="Scroll ke bawah"
+          {/* --- VVV <button> diubah menjadi <Link> VVV --- */}
+          <Link
+            to="/about" // Arahkan ke halaman /about
+            aria-label="Pelajari Lebih Lanjut"
             className="text-white animate-bounce-slow"
           >
             <ChevronDown size={40} />
-          </button>
+          </Link>
           {/* --- ^^^ AKHIR PERUBAHAN LINK ^^^ --- */}
         </div>
         
@@ -145,3 +148,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

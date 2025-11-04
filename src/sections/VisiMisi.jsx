@@ -1,59 +1,176 @@
+import { Target, Rocket, ClipboardCheck } from 'lucide-react'; // <-- Ikon Tujuan ditambahkan
+// --- VVV Impor hook untuk animasi VVV ---
+import React, { useState, useEffect, useRef } from 'react';
+// --- ^^^ Akhir impor hook ^^^ ---
+
 const VisiMisi = () => {
+  // --- VVV State & Ref untuk animasi fade-in VVV ---
+  const [visiVisible, setVisiVisible] = useState(false);
+  const [misiVisible, setMisiVisible] = useState(false);
+  const [tujuanVisible, setTujuanVisible] = useState(false);
+
+  const visiRef = useRef(null);
+  const misiRef = useRef(null);
+  const tujuanRef = useRef(null);
+
+  useEffect(() => {
+    // Pengamat untuk mendeteksi kapan elemen masuk ke viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Set state yang sesuai menjadi true saat elemen terlihat
+            if (entry.target === visiRef.current) {
+              setVisiVisible(true);
+            } else if (entry.target === misiRef.current) {
+              setMisiVisible(true);
+            } else if (entry.target === tujuanRef.current) {
+              setTujuanVisible(true);
+            }
+            observer.unobserve(entry.target); // Berhenti mengamati setelah terlihat
+          }
+        });
+      },
+      { threshold: 0.1 } // Memicu saat 10% elemen terlihat
+    );
+
+    // Mulai mengamati setiap ref
+    const refs = [visiRef, misiRef, tujuanRef];
+    refs.forEach(ref => {
+      if (ref.current) observer.observe(ref.current);
+    });
+
+    // Cleanup
+    return () => {
+      refs.forEach(ref => {
+        if (ref.current) observer.unobserve(ref.current);
+      });
+    };
+  }, []); // Hanya berjalan sekali saat mount
+  // --- ^^^ Akhir state & ref animasi ^^^ ---
+
+
   return (
-    <section id="visi-misi" className="py-20 bg-white">
+    // Tambahkan overflow-hidden untuk mencegah scrollbar saat animasi translate
+    <section id="visi-misi" className="py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Visi & Misi Informatika</h2>
-          <div className="w-20 h-1 bg-secondary mx-auto"></div>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Visi, Misi & Tujuan</h2>
+          <p className="text-xl text-gray-600">Prodi Informatika</p>
+          <div className="w-20 h-1 bg-secondary mx-auto mt-4"></div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Visi */}
-          <div className="bg-gray-50 p-8 rounded-ifups shadow-md">
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-primary mb-4">Visi</h3>
+        {/* --- VVV LAYOUT DIUBAH MENJADI HIERARKIS & SEIMBANG VVV --- */}
+        <div className="max-w-6xl mx-auto space-y-16">
+          
+          {/* --- BAGIAN VISI (Layout Full-Width, Terpusat) --- */}
+          <div 
+            ref={visiRef}
+            className={`flex flex-col items-center transition-all duration-700 ease-out ${
+              visiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+            }`}
+          >
+            {/* Ikon Visi */}
+            <div className="flex justify-center mb-6">
+              <Target size={80} className="text-primary opacity-20" strokeWidth={1.5} />
             </div>
-            <p className="text-gray-700 leading-relaxed text-center">
-              Menjadi Program Studi Informatika yang unggul dalam pengembangan teknologi informasi 
-              yang berorientasi pada kebutuhan industri dan masyarakat pada tahun 2030.
-            </p>
+            {/* Teks Visi */}
+            <div className="text-center">
+              <h3 className="text-3xl font-semibold text-primary mb-4">Visi</h3>
+              <p className="text-lg md:text-xl text-gray-700 leading-relaxed border-l-4 border-secondary pl-4">
+                "Menjadi program studi yang unggul dibidang literasi rekayasa berbasis AI (Artificial Intelligence) dan teknologi IoT yang berwawasan global pada tahun 2028."
+              </p>
+            </div>
           </div>
 
-          {/* Misi */}
-          <div className="bg-gray-50 p-8 rounded-ifups shadow-md">
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+          {/* --- PEMBUNGKUS UNTUK MISI & TUJUAN (Layout 50/50 Seimbang) --- */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-10 border-t border-gray-200">
+
+            {/* --- BAGIAN MISI (Kolom Kiri) --- */}
+            <div 
+              ref={misiRef}
+              className={`flex flex-col items-center transition-all duration-700 ease-out delay-200 ${
+                misiVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`}
+            >
+              {/* Ikon Misi */}
+              <div className="flex justify-center mb-6">
+                <Rocket size={80} className="text-primary opacity-20" strokeWidth={1.5} />
               </div>
-              <h3 className="text-2xl font-semibold text-primary mb-4">Misi</h3>
+              {/* Teks Misi */}
+              <div className="text-center w-full">
+                <h3 className="text-3xl font-semibold text-primary mb-4">Misi</h3>
+                {/* List Misi (Rata Kiri) */}
+                <ul className="text-gray-700 leading-relaxed space-y-4 text-left">
+                  <li className="flex items-start">
+                    <span className="font-bold text-primary mr-3">a)</span>
+                    <span className="flex-1">
+                      Melaksanakan pendidikan, penelitian dan pengabdian kepada masyarakat di bidang informatika yang berbasis dengan AI (Artificial Intelligence) dan teknologi IoT.
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-bold text-primary mr-3">b)</span>
+                    <span className="flex-1">
+                      Menghasilkan karya inovatif dan publikasi yang relevan dengan kebutuh masyarakat dalam perkembangan IPTEK dengan AI (Artificial Intelligence), dan teknologi IoT.
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-bold text-primary mr-3">c)</span>
+                    <span className="flex-1">
+                      Membangun jejaring kerjasama kemitraan dibidang informatika pada lingkup nasional dan internasional.
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <ul className="text-gray-700 leading-relaxed space-y-3">
-              <li className="flex items-start">
-                <span className="text-secondary mr-2">•</span>
-                Menyelenggarakan pendidikan informatika yang berkualitas dan relevan dengan kebutuhan industri
-              </li>
-              <li className="flex items-start">
-                <span className="text-secondary mr-2">•</span>
-                Melakukan penelitian dan pengembangan dalam bidang teknologi informasi
-              </li>
-              <li className="flex items-start">
-                <span className="text-secondary mr-2">•</span>
-                Memberikan pengabdian kepada masyarakat melalui penerapan teknologi informasi
-              </li>
-            </ul>
+
+            {/* --- BAGIAN TUJUAN (Kolom Kanan) --- */}
+            <div 
+              ref={tujuanRef}
+              className={`flex flex-col items-center transition-all duration-700 ease-out delay-[400ms] ${
+                tujuanVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+              }`}
+            >
+              {/* Ikon Tujuan */}
+              <div className="flex justify-center mb-6">
+                <ClipboardCheck size={80} className="text-primary opacity-20" strokeWidth={1.5} />
+              </div>
+              {/* Teks Tujuan */}
+              <div className="text-center w-full">
+                <h3 className="text-3xl font-semibold text-primary mb-4">Tujuan</h3>
+                {/* List Tujuan (Rata Kiri) */}
+                <ul className="text-gray-700 leading-relaxed space-y-4 text-left">
+                  <li className="flex items-start">
+                    <span className="font-bold text-primary mr-3">a)</span>
+                    <span className="flex-1">
+                      Dihasilkannya lulusan yang kompeten dibidang informatika yang berbasis AI (Artificial Intelligence) dan teknologi IoT;
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-bold text-primary mr-3">b)</span>
+                    <span className="flex-1">
+                      Terwujudnya karya penelitian dan pengabdian kepada masyarakat yang inovatif beserta publikasi yang relevan dengan kebutuhan masyarakat dalam perkembangan IPTEK dengan AI (Artificial Intelligence) dan teknologi IoT;
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="font-bold text-primary mr-3">c)</span>
+                    <span className="flex-1">
+                      Terbangunnya jejaring kerjasama kemitraan di bidang informatika pada lingkup nasional dan internasional.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
           </div>
+          {/* --- ^^^ AKHIR LAYOUT 50/50 ^^^ --- */}
+          
         </div>
+        
       </div>
     </section>
   );
 };
 
 export default VisiMisi;
+

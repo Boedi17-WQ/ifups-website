@@ -8,11 +8,8 @@ import Maintenance from './pages/Maintenance';
 import BeritaIndex from './pages/berita/BeritaIndex';
 import BeritaDetail from './pages/berita/BeritaDetail';
 import DosenIndex from './pages/dosen/DosenIndex';
-
-// --- VVV IMPOR AlumniIndex DIAKTIFKAN VVV ---
-import AlumniIndex from './pages/alumni/AlumniIndex'; // <-- 1. AKTIFKAN IMPOR INI
-// --- ^^^ AKHIR IMPOR AlumniIndex ^^^ ---
-
+import AlumniIndex from './pages/alumni/AlumniIndex'; 
+import AboutIndex from './pages/about/AboutIndex'; // <-- Impor sudah ada
 import { appSettings } from './config/settings';
 
 // Komponen AppContent (mengelola layout)
@@ -20,8 +17,8 @@ const AppContent = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
-  // --- VVV TAMBAHKAN /alumni KE fullScreenPages VVV ---
-  const fullScreenPages = ['/berita', '/dosen', '/alumni']; // <-- 2. TAMBAHKAN /alumni DI SINI
+  // --- VVV TAMBAHKAN /about KE fullScreenPages VVV ---
+  const fullScreenPages = ['/berita', '/dosen', '/alumni', '/about']; // <-- 1. TAMBAHKAN /about DI SINI
   // --- ^^^ AKHIR PERUBAHAN ^^^ ---
 
   const isFullScreen = fullScreenPages.some(path => location.pathname.startsWith(path));
@@ -49,10 +46,11 @@ const AppContent = () => {
           <Route path="/berita" element={<BeritaIndex />} />
           <Route path="/berita/:id" element={<BeritaDetail />} />
           <Route path="/dosen" element={<DosenIndex />} />
+          <Route path="/alumni" element={<AlumniIndex />} />
 
-          {/* --- VVV RUTE AlumniIndex DIAKTIFKAN VVV --- */}
-          <Route path="/alumni" element={<AlumniIndex />} /> {/* <-- 3. AKTIFKAN RUTE INI */}
-          {/* --- ^^^ AKHIR RUTE AlumniIndex ^^^ --- */}
+          {/* --- VVV RUTE AboutIndex DIAKTIFKAN VVV --- */}
+          <Route path="/about" element={<AboutIndex />} /> {/* <-- 2. AKTIFKAN RUTE INI */}
+          {/* --- ^^^ AKHIR RUTE AboutIndex ^^^ --- */}
 
         </Routes>
         <Footer />
