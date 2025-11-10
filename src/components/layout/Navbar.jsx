@@ -28,9 +28,7 @@ const Navbar = ({ onToggleCollapse }) => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
 
-    // Hapus listener hashchange, biarkan observer yang bekerja
-    // const handleHashChange = () => setActiveHash(window.location.hash || "#home");
-    // window.addEventListener("hashchange", handleHashChange);
+    
 
     if (onToggleCollapse) onToggleCollapse(isCollapsed);
 
@@ -42,13 +40,12 @@ const Navbar = ({ onToggleCollapse }) => {
           }
         });
       },
-      // rootMargin -70% berarti section harus 70% terlihat di atas
-      // sebelum section di bawahnya dianggap aktif
+      
       { root: null, rootMargin: "0px 0px -70% 0px", threshold: 0.1 }
     );
 
     navItems.forEach((item) => {
-      // Hapus tanda # dari href untuk querySelector
+      
       const section = document.querySelector(item.href);
       if (section) observer.observe(section);
     });
@@ -58,9 +55,8 @@ const Navbar = ({ onToggleCollapse }) => {
       // window.removeEventListener("hashchange", handleHashChange);
       observer.disconnect();
     };
-    // Hapus onToggleCollapse dari dependency array jika tidak diperlukan
-    // Kecuali jika 'onToggleCollapse' benar-benar memicu efek yang diinginkan
-  }, [isCollapsed, onToggleCollapse]); // <-- 'navItems' tidak perlu ditambahkan di sini
+    
+  }, [isCollapsed, onToggleCollapse]); 
 
   const handleCollapse = () => {
     const newState = !isCollapsed;
@@ -69,21 +65,21 @@ const Navbar = ({ onToggleCollapse }) => {
   };
 
   const handleLinkClick = (e, href) => {
-    // 1. Hentikan perilaku 'lompat' bawaan
+    
     e.preventDefault();
 
-    // 2. Cari elemen section
+    
     const section = document.querySelector(href);
 
     if (section) {
-      // 3. Lakukan smooth scroll ke elemen
+      
       section.scrollIntoView({ behavior: "smooth" });
     }
 
-    // 4. Update URL di browser
+    
     window.history.pushState(null, null, href);
 
-    // 5. Tutup sidebar di mobile
+    
     setIsSidebarOpen(false);
   };
 
@@ -91,7 +87,7 @@ const Navbar = ({ onToggleCollapse }) => {
 
   return (
     <>
-      {/* Tombol Menu Mobile */}
+      
       {!isSidebarOpen && (
         <button
           className={`fixed top-4 left-4 z-50 p-2 rounded-lg lg:hidden transition-all ${
@@ -105,7 +101,7 @@ const Navbar = ({ onToggleCollapse }) => {
         </button>
       )}
 
-      {/* Sidebar */}
+      
       <aside
         className={`fixed top-0 left-0 h-full ${sidebarWidthClass} shadow-xl z-40 bg-white transition-all duration-300
         ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
@@ -127,7 +123,7 @@ const Navbar = ({ onToggleCollapse }) => {
             </div>
           )}
 
-          {/* Tombol Collapse (desktop only) */}
+          
           <button
             className={`hidden lg:flex p-1 rounded text-white hover:bg-blue-700 transition ${
               isCollapsed ? "mx-auto" : ""
@@ -137,7 +133,7 @@ const Navbar = ({ onToggleCollapse }) => {
             {isCollapsed ? <ChevronsRight size={24} /> : <ChevronsLeft size={24} />}
           </button>
 
-          {/* Tombol Close (mobile only) */}
+          
           {isSidebarOpen && (
             <button
               className="absolute right-3 top-3 lg:hidden flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full p-2 transition"
@@ -178,7 +174,6 @@ const Navbar = ({ onToggleCollapse }) => {
         </nav>
       </aside>
 
-      {/* Overlay (mobile only) */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-30 lg:hidden"

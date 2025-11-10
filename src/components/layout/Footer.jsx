@@ -5,29 +5,29 @@ const Footer = () => {
     <footer className="bg-primary text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo dan Deskripsi */}
+          
           <div className="md:col-span-2">
             
-            {/* --- VVV BAGIAN LOGO DIPERBARUI UNTUK DUA LOGO VVV --- */}
+            
             <div className="flex items-center space-x-3 mb-4"> 
               {/* Logo IFUPS */}
               <img 
-                src="/Logo IFUPS.png" // Path ke logo IFUPS di folder public
+                src="/Logo IFUPS.png" 
                 alt="Logo IFUPS" 
                 className="h-10 object-contain" // Gunakan object-contain
-                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/40x40/003D8D/FECE00?text=IF"; }} // Fallback
+                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/40x40/003D8D/FECE00?text=IF"; }} 
               />
-              {/* Logo WeAreIFUPS */}
+              
               <img 
-                src="/WeAreIFUPS.svg" // Path ke gambar SVG Anda di folder public
+                src="/WeAreIFUPS.svg" 
                 alt="#WEARE IFUPS Logo" 
-                className="h-10 object-contain" // Gunakan object-contain
-                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/120x40/003D8D/FECE00?text=UPS"; }} // Fallback
+                className="h-10 object-contain" 
+                onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/120x40/003D8D/FECE00?text=UPS"; }} 
               />
             </div>
-            {/* --- ^^^ AKHIR PERUBAHAN LOGO ^^^ --- */}
             
-            <p className="text-gray-300 mb-4 text-sm leading-relaxed"> {/* Ukuran teks dikecilkan sedikit */}
+            
+            <p className="text-gray-300 mb-4 text-sm leading-relaxed"> 
               Program Studi Informatika Universitas Pancasakti Tegal - 
               Menghasilkan lulusan yang kompeten di bidang teknologi informasi.
             </p>
@@ -56,11 +56,11 @@ const Footer = () => {
           {/* Link Cepat */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Info Selanjutnya</h3>
-            <ul className="space-y-2 text-sm"> {/* Ukuran teks dikecilkan */}
+            <ul className="space-y-2 text-sm"> 
               <li><a href="https://pmb.upstegal.ac.id/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-secondary transition-colors">PMB-UPS</a></li>
+              <li><a href="https://upstegal.ac.id/" className="text-gray-300 hover:text-secondary transition-colors">UPS-Tegal</a></li>
               <li><a href="https://pmb.upstegal.ac.id/prodi" className="text-gray-300 hover:text-secondary transition-colors">Program Studi</a></li>
-              <li><a href="#dosen" className="text-gray-300 hover:text-secondary transition-colors">UPS-Tegal</a></li>
-              <li><a href="#berita" className="text-gray-300 hover:text-secondary transition-colors">Perpustakan</a></li>
+              <li><a href="https://lib.upstegal.ac.id/" className="text-gray-300 hover:text-secondary transition-colors">Perpustakan</a></li>
             </ul>
           </div>
 

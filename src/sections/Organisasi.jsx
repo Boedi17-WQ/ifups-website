@@ -1,21 +1,21 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom"; // <-- DITAMBAHKAN
+import { Link } from "react-router-dom"; 
 
 const Organisasi = () => {
-  // --- VVV DATA DIPERBARUI (HANYA 2 ORGANISASI) VVV ---
+  
   const organisations = [
     {
       name: "HIMATIF",
       description: "Himpunan Mahasiswa Informatika",
-      logo: "/Logo HMIF.jpg",
+      logo: "/LogoHMIF.png",
     },
     {
       name: "PEMCODE",
       description: "Komunitas Programming Tegal",
-      logo: "/LOGO  PEMCODE.png", // <-- Path diperbaiki (spasi dihapus)
+      logo: "/LogoPemcode.png", 
     }
   ];
-  // --- ^^^ AKHIR DATA ^^^ ---
+  
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
@@ -27,10 +27,10 @@ const Organisasi = () => {
   };
 
   return (
-    // --- VVV Latar belakang diubah untuk kontras VVV ---
+    
     <section id="organisasi" className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        {/* Judul */}
+        
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -45,7 +45,7 @@ const Organisasi = () => {
           <div className="w-16 h-1 bg-secondary mx-auto mt-4 rounded-full"></div>
         </motion.div>
 
-        {/* --- VVV GRID DIUBAH MENJADI FLEXBOX UNTUK 2 ITEM VVV --- */}
+        
         <div className="flex flex-col md:flex-row justify-center gap-10 md:gap-20">
           {organisations.map((org, i) => (
             <motion.div
@@ -57,23 +57,20 @@ const Organisasi = () => {
               viewport={{ once: true }}
               className="flex flex-col items-center text-center group"
             >
-              {/* --- VVV TAMPILAN LOGO DIKEMBANGKAN VVV --- */}
-              {/* Logo "Badge" - Diberi background putih, padding, dan shadow */}
+              
               <div className="mb-4 bg-white p-3 rounded-full shadow-lg group-hover:shadow-xl transition-all duration-300">
                 <img
                   src={org.logo}
                   alt={`Logo ${org.name}`}
-                  // Ukuran diperbesar
+                  
                   className="h-24 w-24 object-contain group-hover:scale-110 transition-transform duration-300"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = `https://placehold.co/96x96/cccccc/ffffff?text=${org.name.substring(0, 2)}`; // Ukuran fallback diubah
+                    e.target.src = `https://placehold.co/96x96/cccccc/ffffff?text=${org.name.substring(0, 2)}`; 
                   }}
                 />
               </div>
-              {/* --- ^^^ AKHIR TAMPILAN LOGO ^^^ --- */}
-
-              {/* Teks */}
+              
               <h3 className="text-lg font-semibold text-primary  transition-colors">
                 {org.name}
               </h3>
@@ -81,27 +78,7 @@ const Organisasi = () => {
             </motion.div>
           ))}
         </div>
-        {/* --- ^^^ AKHIR PERUBAHAN FLEXBOX ^^^ --- */}
-
-
-        {/* --- VVV Tombol "Lihat Semua" Dihapus VVV --- */}
-        {/*
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mt-16" // Margin atas ditambah
-        >
-          <Link
-            to="/organisasi" // Diubah dari href
-            className="inline-block bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-secondary hover:text-primary transition-all duration-300 shadow-md hover:shadow-lg"
-          >
-            Lihat Semua
-          </Link>
-        </motion.div>
-        */}
-        {/* --- ^^^ AKHIR PENGHAPUSAN TOMBOL ^^^ --- */}
+        
       </div>
     </section>
   );

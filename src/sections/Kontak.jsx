@@ -85,7 +85,7 @@ const Kontak = () => {
       id="kontak"
       className="py-24 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden"
     >
-      {/* Header */}
+      
       <div className="text-center mb-16">
         <h2 className="text-3xl md:text-4xl font-extrabold text-[#003D8D] tracking-tight mb-3">
           Hubungi Kami
@@ -97,12 +97,12 @@ const Kontak = () => {
         <div className="w-20 h-1 bg-secondary mx-auto mt-5 rounded-full"></div>
       </div>
 
-      {/* Contact Grid (tanpa card) */}
+      
       <div className="container mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           {contactInfo.map((contact, index) => (
             <div key={index} className="group">
-              {/* Icon */}
+              
               <div
                 className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md hover:scale-110 transition-transform duration-300"
                 style={{ backgroundColor: contact.color }}
@@ -110,20 +110,20 @@ const Kontak = () => {
                 {contact.icon}
               </div>
 
-              {/* Title */}
+              
               <h4 className="text-xl font-semibold text-[#003D8D] mb-2">
                 {contact.title}
               </h4>
 
-              {/* Subtitle */}
+              
               <p className="text-gray-600 text-sm mb-2 leading-relaxed">
                 {contact.subtitle}
               </p>
 
-              {/* Detail */}
+              
               <p className="text-gray-800 font-medium text-sm">{contact.detail}</p>
 
-              {/* Button */}
+              
               <button
                 onClick={() => handleContactClick(contact.link, contact.title)}
                 className="mt-5 bg-[#003D8D] text-white px-6 py-2.5 rounded-lg font-medium text-sm hover:bg-blue-900 transition-all duration-300 group-hover:scale-105"
@@ -134,7 +134,7 @@ const Kontak = () => {
           ))}
         </div>
 
-        {/* Background Accent */}
+        
         <div className="absolute inset-0 -z-10 opacity-5 bg-[url('/grid-pattern.svg')] bg-center bg-repeat"></div>
       </div>
     </section>
