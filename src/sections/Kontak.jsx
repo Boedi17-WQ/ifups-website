@@ -1,15 +1,48 @@
-// src/components/sections/Kontak.jsx
-
+// --- VVV Impor motion dan React VVV ---
 import React from "react";
+import { motion } from "framer-motion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+};
+
+const gridContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15, 
+      delayChildren: 0.2,   
+    }
+  }
+};
+
+const cardItem = {
+  hidden: { opacity: 0, y: 30, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+};
+
+
 
 const Kontak = () => {
   const contactInfo = [
     {
       title: "Email",
       subtitle: "Hubungi kami melalui email untuk pertanyaan umum",
-      detail: "info@ifups.tegal.ac.id",
-      link: "mailto:info@ifups.tegal.ac.id",
+      detail: "admin@upstegal.ac.id",
+      link: "mailto:admin@upstegal.ac.id",
       color: "#003D8D",
+      target: "_blank",
       icon: (
         <svg
           className="w-10 h-10 text-white"
@@ -29,9 +62,10 @@ const Kontak = () => {
     {
       title: "WhatsApp",
       subtitle: "Klik untuk memulai percakapan dengan kami",
-      detail: "(0283) 1234567",
-      link: "https://wa.me/6281234567890",
+      detail: "(0283) 351082",
+      link: "https://wa.me/62811269009",
       color: "#003D8D",
+      target: "_blank",
       icon: (
         <svg
           className="w-10 h-10 text-white"
@@ -46,8 +80,9 @@ const Kontak = () => {
       title: "Lokasi",
       subtitle: "Kampus kami berada di",
       detail: "Jl. Halmahera No.1, Tegal, Jawa Tengah",
-      link: "https://maps.google.com/?q=Jl.+Halmahera+No.1,+Tegal,+Jawa+Tengah",
+      link: "https://maps.app.goo.gl/AjEGFmVbfNxE3rMM7",
       color: "#003D8D",
+      target: "_blank",
       icon: (
         <svg
           className="w-10 h-10 text-white"
@@ -85,8 +120,14 @@ const Kontak = () => {
       id="kontak"
       className="py-24 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden"
     >
-      
-      <div className="text-center mb-16">
+      {/* Header (Dibungkus motion.div) */}
+      <motion.div
+        className="text-center mb-16"
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
+      >
         <h2 className="text-3xl md:text-4xl font-extrabold text-[#003D8D] tracking-tight mb-3">
           Hubungi Kami
         </h2>
@@ -95,14 +136,25 @@ const Kontak = () => {
           dan pertanyaan Anda
         </p>
         <div className="w-20 h-1 bg-secondary mx-auto mt-5 rounded-full"></div>
-      </div>
+      </motion.div>
 
-      
+      {/* Contact Grid (tanpa card) */}
       <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+        {/* Grid Dibungkus motion.div */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center"
+          variants={gridContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }} 
+        >
           {contactInfo.map((contact, index) => (
-            <div key={index} className="group">
-              
+            
+            <motion.div 
+              key={index} 
+              variants={cardItem} 
+              className="group"
+            >
               <div
                 className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md hover:scale-110 transition-transform duration-300"
                 style={{ backgroundColor: contact.color }}
@@ -110,31 +162,27 @@ const Kontak = () => {
                 {contact.icon}
               </div>
 
-              
               <h4 className="text-xl font-semibold text-[#003D8D] mb-2">
                 {contact.title}
               </h4>
 
-              
               <p className="text-gray-600 text-sm mb-2 leading-relaxed">
                 {contact.subtitle}
               </p>
 
-              
               <p className="text-gray-800 font-medium text-sm">{contact.detail}</p>
 
-              
               <button
                 onClick={() => handleContactClick(contact.link, contact.title)}
                 className="mt-5 bg-[#003D8D] text-white px-6 py-2.5 rounded-lg font-medium text-sm hover:bg-blue-900 transition-all duration-300 group-hover:scale-105"
               >
                 {contact.title === "Lokasi" ? "Lihat Peta" : `Hubungi via ${contact.title}`}
               </button>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        
+        {/* Background Accent */}
         <div className="absolute inset-0 -z-10 opacity-5 bg-[url('/grid-pattern.svg')] bg-center bg-repeat"></div>
       </div>
     </section>
