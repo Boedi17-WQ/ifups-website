@@ -79,7 +79,7 @@ const Kontak = () => {
     {
       title: "Lokasi",
       subtitle: "Kampus kami berada di",
-      detail: "Jl. Halmahera No.1, Tegal, Jawa Tengah",
+      detail: "Jl. Halmahera No.KM. 01, Mintaragen, Kec. Tegal Tim., Kota Tegal, Jawa Tengah 52121",
       link: "https://maps.app.goo.gl/AjEGFmVbfNxE3rMM7",
       color: "#003D8D",
       target: "_blank",

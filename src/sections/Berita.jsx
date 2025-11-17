@@ -106,18 +106,15 @@ const Berita = () => {
                     to={`/berita/${item.id}`} 
                     className="inline-block bg-secondary text-primary font-semibold px-6 py-2 rounded-lg hover:bg-yellow-400 transition-colors"
                   >
-                    Selanjutnya
+                    Selengkapnya
                   </Link>
                 </div>
               </div>
             </motion.div>
-            // --- ^^^ AKHIR ITEM BERITA ^^^ ---
+            
           ))}
         </motion.div>
-        {/* --- ^^^ AKHIR GRID ^^^ --- */}
-
-
-        {/* Tombol "Lihat Semua Berita" (Dibungkus motion.div) */}
+        
         <motion.div 
           className="text-center mt-16"
           variants={fadeUp}
