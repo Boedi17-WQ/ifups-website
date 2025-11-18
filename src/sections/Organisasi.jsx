@@ -10,9 +10,9 @@ const Organisasi = () => {
       logo: "/LogoHMIF.png",
     },
     {
-      name: "PEMCODE",
+      name: "METAMESTA",
       description: "Komunitas Programming Tegal",
-      logo: "/LogoPemcode.png", 
+      logo: "/Logo Metamesta.png", 
     }
   ];
   
