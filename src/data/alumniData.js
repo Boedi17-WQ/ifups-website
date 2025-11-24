@@ -15,7 +15,7 @@ export const allAlumni = [
     id: 2,
     nama: "Citra Dewi, S.Kom.",
     angkatan: 2019,
-    pekerjaan: "UI/UX Designer di Tokopedia",
+    pekerjaan: "kejuaran UI/UX Designer di Tokopedia tingkat nasional di negara indonesia",
     testimoni: "Mata kuliah Interaksi Manusia Komputer sangat membantu saya dalam berkarir di bidang UI/UX.",
     foto: "/images/alumni/citra.jpg",
     linkedin: "https://linkedin.com/in/citradewi",
