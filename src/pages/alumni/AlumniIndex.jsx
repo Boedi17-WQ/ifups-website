@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowLeftCircle } from "lucide-react"; 
-import { allAlumni } from "../../data/alumniData"; // Impor data alumni
+import { ArrowLeftCircle } from "lucide-react";
+import { allAlumni } from "../../data/alumniData";
 import { motion } from "framer-motion";
 
 // --- Varian Animasi ---
@@ -18,8 +18,8 @@ const gridContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1, 
-      delayChildren: 0.2,   
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
     }
   }
 };
@@ -35,12 +35,11 @@ const cardItem = {
 };
 
 const AlumniIndex = () => {
-
   if (!allAlumni || allAlumni.length === 0) {
     return (
       <div className="py-24 bg-white min-h-screen relative flex flex-col items-center justify-center text-center px-4">
-        <Link 
-          to="/" 
+        <Link
+          to="/"
           aria-label="Kembali ke Halaman Utama"
           className="absolute top-12 left-10 md:left-12 z-20 flex items-center gap-2 text-primary bg-white shadow-md px-4 py-2 rounded-full hover:bg-gray-100 hover:shadow-lg hover:text-secondary transition-all"
         >
@@ -49,7 +48,7 @@ const AlumniIndex = () => {
         </Link>
         <h1 className="text-4xl font-bold text-primary mb-4">Oops!</h1>
         <p className="text-xl text-gray-600">Data alumni tidak dapat dimuat.</p>
-        <Link 
+        <Link
           to="/"
           className="mt-6 px-6 py-2 bg-primary text-white rounded-full hover:bg-blue-800 transition-colors"
         >
@@ -73,7 +72,7 @@ const AlumniIndex = () => {
 
       <div className="container mx-auto px-4">
         {/* Judul Halaman */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16"
           variants={fadeUp}
           initial="hidden"
@@ -90,7 +89,7 @@ const AlumniIndex = () => {
         </motion.div>
 
         {/* Grid Kartu Alumni */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
           variants={gridContainer}
           initial="hidden"
@@ -101,35 +100,36 @@ const AlumniIndex = () => {
             <motion.div
               key={alumnus.id}
               variants={cardItem}
-              // --- VVV STRUKTUR KARTU BARU (Rounded, Border Bawah, Group) VVV ---
-              className="group bg-white shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1 border-b-4 border-secondary relative rounded-2xl"
             >
-              <div className="relative overflow-hidden h-full">
-                {/* --- Gambar Tinggi (h-96) & Zoom Effect --- */}
-                <img
-                  src={alumnus.foto}
-                  alt={alumnus.nama}
-                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-105" 
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = `https://placehold.co/400x500/cccccc/ffffff?text=Foto+${alumnus.nama.split(" ")[0]}`;
-                  }}
-                />
-                
-                {/* --- Overlay Gradasi Kuning (Secondary) & Teks Fleksibel --- */}
-                {/* Menggunakan 'pt-28' agar teks panjang tidak terpotong dan gradasi naik ke atas */}
-                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-secondary via-secondary/90 to-transparent pt-28 pb-5 px-5 flex flex-col justify-end">
-                  {/* Nama (Warna Primary/Biru agar kontras dengan Kuning) */}
-                  <h3 className="text-base font-bold text-primary leading-snug mb-1 drop-shadow-sm">
-                    {alumnus.nama}
-                  </h3>
-                  {/* Pekerjaan */}
-                  <p className="text-xs text-blue-900 font-medium leading-relaxed opacity-90">
-                    {alumnus.pekerjaan}
-                  </p>
+              {/* --- VVV LINK DITAMBAHKAN DI SINI UNTUK MENGHUBUNGKAN KE DETAIL VVV --- */}
+              <Link
+                to={`/alumni/${alumnus.id}`} // Mengarahkan ke halaman detail berdasarkan ID
+                className="group bg-white shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1 border-b-4 border-secondary relative rounded-2xl block h-full max-w-xs mx-auto sm:max-w-none w-full"
+              >
+                <div className="relative overflow-hidden h-full">
+                  {/* Gambar Tinggi (h-96) */}
+                  <img
+                    src={alumnus.foto}
+                    alt={alumnus.nama}
+                    className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-105"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `https://placehold.co/400x500/cccccc/ffffff?text=Foto+${alumnus.nama.split(" ")[0]}`;
+                    }}
+                  />
+
+                  {/* Overlay Gradasi Kuning */}
+                  <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-secondary via-secondary/90 to-transparent pt-28 pb-5 px-5 flex flex-col justify-end">
+                    <h3 className="text-base font-bold text-primary leading-snug mb-1 drop-shadow-sm">
+                      {alumnus.nama}
+                    </h3>
+                    <p className="text-xs text-blue-900 font-medium leading-relaxed opacity-90">
+                      {alumnus.pekerjaan}
+                    </p>
+                  </div>
                 </div>
-                {/* --- ^^^ AKHIR PERUBAHAN ^^^ --- */}
-              </div>
+              </Link>
+              {/* --- ^^^ AKHIR LINK ^^^ --- */}
             </motion.div>
           ))}
         </motion.div>

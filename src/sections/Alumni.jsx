@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"; 
 import { motion } from "framer-motion";
+// Pastikan path ini benar (relatif dari src/sections/)
 import { allAlumni } from "../data/alumniData"; 
 
-// Ambil 4 alumni pertama dari data
+// Ambil 4 alumni pertama dari data untuk ditampilkan di Beranda
 const featuredAlumni = allAlumni.slice(0, 4);
 
 // --- Varian Animasi ---
@@ -65,31 +66,35 @@ const Alumni = () => {
             <motion.div
               key={alumnus.id}
               variants={cardItem}
-              // --- VVV PERUBAHAN DI SINI: max-w-xs (lebih ramping) VVV ---
-              className="group bg-white shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1 border-b-4 border-secondary relative rounded-2xl max-w-xs mx-auto sm:max-w-none w-full"
             >
-              <div className="relative overflow-hidden h-full">
-                {/* --- Gambar Tinggi (h-96) --- */}
-                <img
-                  src={alumnus.foto}
-                  alt={alumnus.nama}
-                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-105" 
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = `https://placehold.co/400x500/cccccc/ffffff?text=Foto+${alumnus.nama.split(" ")[0]}`;
-                  }}
-                />
-                
-                {/* --- Overlay Gradasi Kuning --- */}
-                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-secondary via-secondary/80 to-transparent pt-28 pb-5 px-5 flex flex-col justify-end">
-                  <h3 className="text-base font-bold text-primary leading-snug mb-1 drop-shadow-sm">
-                    {alumnus.nama}
-                  </h3>
-                  <p className="text-xs text-blue-900 font-medium leading-relaxed opacity-90">
-                    {alumnus.pekerjaan}
-                  </p>
+              {/* --- LINK KE DETAIL --- */}
+              <Link
+                to={`/alumni/${alumnus.id}`} // Link dinamis ke halaman detail
+                className="group bg-white shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1 border-b-4 border-secondary relative rounded-2xl block h-full max-w-xs mx-auto sm:max-w-none w-full"
+              >
+                <div className="relative overflow-hidden h-full">
+                  {/* Gambar Tinggi (h-96) */}
+                  <img
+                    src={alumnus.foto}
+                    alt={alumnus.nama}
+                    className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-105" 
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `https://placehold.co/400x500/cccccc/ffffff?text=Foto+${alumnus.nama.split(" ")[0]}`;
+                    }}
+                  />
+                  
+                  {/* Overlay Gradasi Kuning */}
+                  <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-secondary via-secondary/80 to-transparent pt-28 pb-5 px-5 flex flex-col justify-end">
+                    <h3 className="text-base font-bold text-primary leading-snug mb-1 drop-shadow-sm">
+                      {alumnus.nama}
+                    </h3>
+                    <p className="text-xs text-blue-900 font-medium leading-relaxed opacity-90">
+                      {alumnus.pekerjaan}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
@@ -103,7 +108,7 @@ const Alumni = () => {
           viewport={{ once: true, amount: 0.5 }}
         >
           <Link
-            to="/alumni"
+            to="/alumni" // Mengarah ke AlumniIndex
             className="bg-primary text-white px-10 py-3 rounded-ifups hover:bg-blue-900 transition-colors inline-block"
           >
             Lihat Semua Alumni

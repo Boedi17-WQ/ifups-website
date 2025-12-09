@@ -5,11 +5,21 @@ import Footer from './components/layout/Footer';
 import ScrollToTop from './components/layout/ScrollToTop';
 import Home from './pages/Home';
 import Maintenance from './pages/Maintenance';
+
+// Impor Halaman Berita
 import BeritaIndex from './pages/berita/BeritaIndex';
 import BeritaDetail from './pages/berita/BeritaDetail';
+
+// Impor Halaman Dosen
 import DosenIndex from './pages/dosen/DosenIndex';
-import AlumniIndex from './pages/alumni/AlumniIndex'; 
-import AboutIndex from './pages/about/AboutIndex'; // <-- Impor sudah ada
+
+// Impor Halaman Alumni
+import AlumniIndex from './pages/alumni/AlumniIndex';
+import AlumniDetail from './pages/alumni/AlumniDetail';
+
+// Impor Halaman Tentang Kami
+import AboutIndex from './pages/about/AboutIndex';
+
 import { appSettings } from './config/settings';
 
 // Komponen AppContent (mengelola layout)
@@ -17,40 +27,49 @@ const AppContent = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
-  // --- VVV TAMBAHKAN /about KE fullScreenPages VVV ---
-  const fullScreenPages = ['/berita', '/dosen', '/alumni', '/about']; // <-- 1. TAMBAHKAN /about DI SINI
-  // --- ^^^ AKHIR PERUBAHAN ^^^ ---
-
+  // Daftar halaman full-screen (tanpa sidebar)
+  const fullScreenPages = ['/berita', '/dosen', '/alumni', '/about'];
+  
+  // Cek apakah URL saat ini dimulai dengan salah satu path di atas
   const isFullScreen = fullScreenPages.some(path => location.pathname.startsWith(path));
 
   const handleCollapseToggle = (collapsed) => {
     setIsCollapsed(collapsed);
   };
-
+  
+  // Jika full-screen, margin Class = '', jika tidak, gunakan logika sidebar
   const mainMarginClass = isFullScreen ? '' : (isCollapsed ? 'lg:ml-20' : 'lg:ml-64');
 
   return (
-    <div className="App bg-gray-50 min-h-screen">
+    <div className="App bg-gray-50 min-h-screen"> 
       <ScrollToTop />
-
+      
       {/* Tampilkan Navbar jika bukan halaman full-screen */}
       {!isFullScreen && (
-        <Navbar onToggleCollapse={handleCollapseToggle} />
+        <Navbar onToggleCollapse={handleCollapseToggle} /> 
       )}
-
-      {/* Konten utama */}
-      <main className={`transition-all duration-300 ${mainMarginClass}`}>
+      
+      <main className={`transition-all duration-300 ${mainMarginClass}`}> 
         <Routes>
+          {/* Halaman Utama */}
           <Route path="/" element={<Home />} />
+          
+          {/* Halaman Maintenance */}
           <Route path="/maintenance" element={<Maintenance />} />
+          
+          {/* Rute Berita */}
           <Route path="/berita" element={<BeritaIndex />} />
-          <Route path="/berita/:id" element={<BeritaDetail />} />
+          <Route path="/berita/:id" element={<BeritaDetail />} /> 
+          
+          {/* Rute Dosen */}
           <Route path="/dosen" element={<DosenIndex />} />
-          <Route path="/alumni" element={<AlumniIndex />} />
 
-          {/* --- VVV RUTE AboutIndex DIAKTIFKAN VVV --- */}
-          <Route path="/about" element={<AboutIndex />} /> {/* <-- 2. AKTIFKAN RUTE INI */}
-          {/* --- ^^^ AKHIR RUTE AboutIndex ^^^ --- */}
+          {/* Rute Alumni */}
+          <Route path="/alumni" element={<AlumniIndex />} />
+          <Route path="/alumni/:id" element={<AlumniDetail />} />
+          
+          {/* Rute Tentang Kami */}
+          <Route path="/about" element={<AboutIndex />} />
 
         </Routes>
         <Footer />
@@ -59,7 +78,6 @@ const AppContent = () => {
   );
 }
 
-// Komponen App utama
 function App() {
   const isMaintenance = import.meta.env.VITE_MAINTENANCE_MODE === 'true' || appSettings.maintenanceMode;
 
@@ -77,4 +95,3 @@ function App() {
 }
 
 export default App;
-
