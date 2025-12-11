@@ -3,34 +3,37 @@ import { useState } from 'react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/layout/ScrollToTop';
+
+// --- Impor Halaman ---
 import Home from './pages/Home';
 import Maintenance from './pages/Maintenance';
 
-// Impor Halaman Berita
+// Berita
 import BeritaIndex from './pages/berita/BeritaIndex';
 import BeritaDetail from './pages/berita/BeritaDetail';
 
-// Impor Halaman Dosen
+// Dosen
 import DosenIndex from './pages/dosen/DosenIndex';
+import DosenDetail from './pages/dosen/DosenDetail'; // <-- Pastikan file ini ada
 
-// Impor Halaman Alumni
+// Alumni
 import AlumniIndex from './pages/alumni/AlumniIndex';
 import AlumniDetail from './pages/alumni/AlumniDetail';
 
-// Impor Halaman Tentang Kami
+// About
 import AboutIndex from './pages/about/AboutIndex';
 
 import { appSettings } from './config/settings';
 
-// Komponen AppContent (mengelola layout)
+// Komponen AppContent (mengelola layout & logika full-screen)
 const AppContent = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
 
-  // Daftar halaman full-screen (tanpa sidebar)
+  // Daftar halaman yang tampil full-screen (tanpa sidebar)
+  // Logika startsWith akan menangani sub-rute seperti /berita/1, /dosen/2, dll.
   const fullScreenPages = ['/berita', '/dosen', '/alumni', '/about'];
   
-  // Cek apakah URL saat ini dimulai dengan salah satu path di atas
   const isFullScreen = fullScreenPages.some(path => location.pathname.startsWith(path));
 
   const handleCollapseToggle = (collapsed) => {
@@ -44,34 +47,40 @@ const AppContent = () => {
     <div className="App bg-gray-50 min-h-screen"> 
       <ScrollToTop />
       
-      {/* Tampilkan Navbar jika bukan halaman full-screen */}
+      {/* Tampilkan Navbar (Sidebar) HANYA jika bukan halaman full-screen */}
       {!isFullScreen && (
         <Navbar onToggleCollapse={handleCollapseToggle} /> 
       )}
       
       <main className={`transition-all duration-300 ${mainMarginClass}`}> 
         <Routes>
-          {/* Halaman Utama */}
+          {/* --- Halaman Utama --- */}
           <Route path="/" element={<Home />} />
           
-          {/* Halaman Maintenance */}
+          {/* --- Maintenance --- */}
           <Route path="/maintenance" element={<Maintenance />} />
           
-          {/* Rute Berita */}
+          {/* --- Modul Berita --- */}
           <Route path="/berita" element={<BeritaIndex />} />
           <Route path="/berita/:id" element={<BeritaDetail />} /> 
           
-          {/* Rute Dosen */}
+          {/* --- Modul Dosen --- */}
           <Route path="/dosen" element={<DosenIndex />} />
+          <Route path="/dosen/:id" element={<DosenDetail />} />
 
-          {/* Rute Alumni */}
+          {/* --- Modul Alumni --- */}
           <Route path="/alumni" element={<AlumniIndex />} />
           <Route path="/alumni/:id" element={<AlumniDetail />} />
           
-          {/* Rute Tentang Kami */}
+          {/* --- Modul Tentang Kami --- */}
           <Route path="/about" element={<AboutIndex />} />
 
+          {/* Fallback untuk 404 (Opsional) */}
+          <Route path="*" element={<div className="p-10 text-center">Halaman tidak ditemukan</div>} />
+
         </Routes>
+        
+        {/* Footer selalu tampil di bagian bawah konten */}
         <Footer />
       </main>
     </div>
@@ -79,15 +88,18 @@ const AppContent = () => {
 }
 
 function App() {
+  // Cek mode maintenance dari .env atau settings
   const isMaintenance = import.meta.env.VITE_MAINTENANCE_MODE === 'true' || appSettings.maintenanceMode;
 
   return (
     <Router>
       {isMaintenance ? (
+        // Jika maintenance aktif, hanya tampilkan halaman Maintenance
         <Routes>
           <Route path="*" element={<Maintenance />} />
         </Routes>
       ) : (
+        // Jika tidak, tampilkan konten aplikasi normal
         <AppContent />
       )}
     </Router>
