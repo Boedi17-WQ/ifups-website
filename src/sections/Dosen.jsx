@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom"; 
 import { motion } from "framer-motion";
-// --- VVV Ganti data hardcoded dengan data dari file terpisah VVV ---
-import { allDosen } from "../data/dosenData"; 
+import { allDosen } from "../data/dosenData"; // 1. Impor data statis
 
-// Ambil 4 dosen pertama untuk ditampilkan di beranda
+// 2. Ambil 4 dosen pertama dari data statis
 const featuredLecturers = allDosen.slice(0, 4);
-// --- ^^^ Akhir pengambilan data ^^^ ---
 
 // --- Varian Animasi ---
 const fadeUp = {
@@ -68,11 +66,13 @@ const Dosen = () => {
             <motion.div
               key={lecturer.id}
               variants={cardItem} 
-              className="group bg-white shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1 border-b-4 border-secondary relative rounded-2xl" 
+              // Desain Kartu (Rounded, Shadow, Ramping di Mobile)
+              className="group bg-white shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1 border-b-4 border-secondary relative rounded-2xl max-w-xs mx-auto sm:max-w-none w-full" 
             >
-              {/* --- VVV LINK KE DETAIL DOSEN DITAMBAHKAN VVV --- */}
+              {/* --- LINK KE DETAIL DOSEN DITAMBAHKAN --- */}
               <Link to={`/dosen/${lecturer.id}`} className="block h-full w-full">
                 <div className="relative overflow-hidden h-full">
+                  {/* Gambar Tinggi (h-96) */}
                   <img
                     src={lecturer.foto}
                     alt={lecturer.nama}
@@ -80,17 +80,27 @@ const Dosen = () => {
                     onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x500/cccccc/ffffff?text=Foto+Dosen"; }}
                   />
                   
+                  {/* Overlay Gradasi Biru */}
                   <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-primary via-primary/90 to-transparent pt-28 pb-5 px-5 flex flex-col justify-end"> 
+                    
+                    {/* Nama Dosen */}
                     <h3 className="text-base font-bold text-white leading-snug mb-1 drop-shadow-md">
                       {lecturer.nama}
                     </h3>
-                    <p className="text-xs text-gray-200 font-medium leading-relaxed opacity-90">
-                      {lecturer.jabatan}
-                    </p> 
+                    
+                     
+
+                    {/* Menampilkan NIP jika ada */}
+                    {lecturer.nip && (
+                      <p className="text-[10px] text-secondary font-semibold tracking-wide uppercase opacity-80">
+                        NIP. {lecturer.nip}
+                      </p>
+                    )}
+
                   </div>
                 </div>
               </Link>
-              {/* --- ^^^ AKHIR LINK ^^^ --- */}
+               {/* --- AKHIR LINK --- */}
             </motion.div>
           ))}
         </motion.div>

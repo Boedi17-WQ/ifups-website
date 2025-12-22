@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeftCircle } from "lucide-react";
 import { motion } from "framer-motion";
-// --- 1. Impor data statis kembali ---
+// --- Menggunakan Data Statis ---
 import { allDosen } from "../../data/dosenData"; 
 
 // --- Varian Animasi ---
@@ -36,7 +36,7 @@ const cardItem = {
 };
 
 const DosenIndex = () => {
-  // --- 2. Cek Data Kosong (Safety Check) ---
+  // --- Cek Data Kosong (Safety Check) ---
   if (!allDosen || allDosen.length === 0) {
     return (
       <div className="py-24 bg-white min-h-screen relative flex flex-col items-center justify-center text-center px-4">
@@ -62,7 +62,7 @@ const DosenIndex = () => {
     );
   }
 
-  // --- 3. Tampilan Utama ---
+  // --- Tampilan Utama ---
   return (
     <div className="py-24 bg-gray-50 min-h-screen relative overflow-hidden">
       {/* Tombol kembali */}
@@ -131,9 +131,14 @@ const DosenIndex = () => {
                     <h3 className="text-base font-bold text-white leading-snug mb-1 drop-shadow-md">
                       {dosen.nama}
                     </h3>
-                    <p className="text-xs text-gray-200 font-medium leading-relaxed opacity-90">
-                      {dosen.jabatan}
-                    </p>
+                    
+                    
+                    {/* Menampilkan NIP jika ada */}
+                    {dosen.nip && (
+                      <p className="text-[10px] text-secondary font-semibold tracking-wide uppercase opacity-80">
+                        NIP. {dosen.nip}
+                      </p>
+                    )}
                   </div>
                 </div>
               </Link>
