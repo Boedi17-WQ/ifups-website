@@ -17,7 +17,7 @@ import AlumniIndex from './pages/alumni/AlumniIndex';
 import AlumniDetail from './pages/alumni/AlumniDetail';
 
 import GaleriIndex from './pages/galeri/GaleriIndex';
-import GaleriDetail from './pages/galeri/GaleriDetail'; // <-- Pastikan diimpor
+
 
 import AboutIndex from './pages/about/AboutIndex';
 import { appSettings } from './config/settings';
@@ -64,7 +64,7 @@ const AppContent = () => {
           
           {/* Rute Galeri */}
           <Route path="/galeri" element={<GaleriIndex />} />
-          <Route path="/galeri/:id" element={<GaleriDetail />} /> {/* <-- Rute Detail Galeri */}
+          
           
           {/* Rute Tentang Kami */}
           <Route path="/about" element={<AboutIndex />} />

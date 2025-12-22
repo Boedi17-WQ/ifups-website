@@ -193,22 +193,7 @@ const GaleriIndex = () => {
           <div className="w-24 h-1 bg-secondary mx-auto mt-6" />
         </motion.div>
 
-        {/* FILTER */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {galleryCategories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === cat
-                  ? "bg-primary text-white shadow-lg scale-105"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        
 
         {/* MASONRY GRID */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 max-w-7xl mx-auto space-y-6">
